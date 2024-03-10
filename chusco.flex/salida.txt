@@ -1,0 +1,44 @@
+linea: 0 identificador: programa 
+linea: 0 identificador: Radio_Circunferencia 
+linea: 2 identificador: principio 
+linea: 3 identificador: PI 
+linea: 3 identificador: constante 
+linea: 3 identificador: real 
+linea: 5 identificador: area 
+linea: 5 identificador: radio 
+linea: 5 identificador: real 
+linea: 6 identificador: otra_cosa 
+linea: 6 identificador: real 
+linea: 6 identificador: x1F 
+linea: 6 identificador: Faa 
+linea: 8 identificador: escribir_consola 
+linea: 8 cadena: "%nRadio de la #{circunferencia#}%
+                    %o151%O144%X69%O157%x74%O141: " 
+linea: 9 identificador: leer_consola 
+linea: 9 identificador: radio 
+linea: 9 identificador: El 
+linea: 9 identificador: resultado 
+linea: 9 identificador: del 
+linea: 9 identificador: area 
+linea: 9 identificador: se 
+linea: 9 identificador: saca 
+linea: 9 identificador: por 
+linea: 9 identificador: la 
+linea: 9 cadena: "consola" 
+linea: 10 identificador: se 
+linea: 10 identificador: trata 
+linea: 10 identificador: de 
+linea: 10 identificador: un 
+linea: 10 identificador: numero 
+linea: 10 identificador: real 
+linea: 11 identificador: escribir_consola 
+linea: 11 cadena: "%nArea de la %
+                     %" 
+linea: 11 identificador: circunferencia 
+linea: 11 cadena: ": #f" 
+linea: 11 identificador: area 
+linea: 11 identificador: escribir_consola 
+linea: 11 cadena: "%n" 
+linea: 13 identificador: DeVoLVeR 
+linea: 13 identificador: area 
+linea: 14 identificador: fin 
