@@ -39,10 +39,14 @@ int main(int argc, char *argv[]) {
     }
   else {
     yyin = fopen(argv[1],"r");
-    yyout = fopen(argv[2], "w");
+    if (argc>2){
+    	yyout=fopen(argv[2],"w");
+    }
     while (yylex());
 
     fclose(yyin);
-    fclose(yyout);
+    if (argc>2){
+      fclose(yyout);
+    }
     }
   }

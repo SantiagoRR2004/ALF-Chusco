@@ -4,3 +4,5 @@ chusco.lex.c:	chusco.l
 	flex chusco.l
 clean:
 	rm  lex.yy.c chusco
+test: chusco
+	./chusco prueba.chu
