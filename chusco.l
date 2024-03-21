@@ -1,26 +1,36 @@
+/* ====================================================================================================================== */
 /* Sección de declaraciones  */
 
-
+/* ============================================================================================= */
+/*  Código en C  */
 %{
 #include <stdio.h>
 #include "chusco.h"
 
-int num_lineas = 0;
+extern int yylineno;
 
 void nl() {
-    printf("This is my custom function!\n");
+  /* Imprime el número de línea */
+    fprintf(yyout, "linea: %d ", yylineno);
 }
 
-
-
-
 %}
+/* ============================================================================================= */
+/*  Macros  */
+
+SP             [ \t]
+IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
+
+/* ============================================================================================= */
+/*  Condiciones de arranque  */
 
 %x COM
 %x CADENA
 
-SP             [ \t]
-IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
+/* ============================================================================================= */
+/*  Opciones  */
+
+%option yylineno
 
 %%  /* ====================================================================================================================== */
   /*  Sección de reglas y acciones  */
@@ -28,17 +38,17 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
   /* ============================================================================================= */
   /*  Palabras reservadas  */
 
-(?i:"abstracto")               fprintf(yyout, "linea: %d palabra reservada: %s \n", num_lineas, yytext);;
+(?i:"abstracto")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext);}
 
   /* ============================================================================================= */
   /*  Identificadores  */
 
-{IDENTIFICADOR}                    fprintf(yyout, "linea: %d identificador: %s \n", num_lineas, yytext);
+{IDENTIFICADOR}                   {nl(); fprintf(yyout, "identificador: %s \n", yytext);}
 
   /* ============================================================================================= */
   /*  Constantes  */
 
-\"[^"]*\"                          fprintf(yyout, "linea: %d cadena: %s \n", num_lineas, yytext); 
+\"[^"]*\"                          {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
   /* [^"]* hace que coja cualquier carácter a excepción de una comilla. */
 
 
@@ -61,7 +71,7 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
   /* ============================================================================================= */
   /*  Errores  */
 
-\n                                 ++num_lineas;
+\n                                 ;
 .                                  ;
 
 
