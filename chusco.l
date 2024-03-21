@@ -38,7 +38,66 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
   /* ============================================================================================= */
   /*  Palabras reservadas  */
 
-(?i:"abstracto")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext);}
+(?i:"abstracto")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ABSTRACTO;}
+(?i:"booleano")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return BOOLEANO;}
+(?i:"bucle")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return BUCLE;}
+(?i:"caracter")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CARACTER;}
+(?i:"casos")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CASOS;}
+(?i:"clase")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CLASE;}
+(?i:"como")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return COMO;}
+(?i:"constante")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CONSTANTE;}
+(?i:"constructor")            {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CONSTRUCTOR;}
+(?i:"corto")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CORTO;}
+(?i:"cuando")                 {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return CUANDO;}
+(?i:"de")                     {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return DE;}
+(?i:"descendente")            {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return DESCENDENTE;}
+(?i:"destructor")             {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return DESTRUCTOR;}
+(?i:"devolver")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return DEVOLVER;}
+(?i:"diccionario")            {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return DICCIONARIO;}
+(?i:"en")                     {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return EN;}
+(?i:"entero")                 {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ENTERO;}
+(?i:"entonces")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ENTONCES;}
+(?i:"enumeracion")            {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ENUMERACION;}
+(?i:"es")                     {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ES;}
+(?i:"especifico")             {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ESPECIFICO;}
+(?i:"excepcion")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return EXCEPCION;}
+(?i:"exportar")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return EXPORTAR;}
+(?i:"falso")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return FALSO;}
+(?i:"fin")                    {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return FIN;}
+(?i:"final")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return FINAL;}
+(?i:"finalmente")             {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return FINALMENTE;}
+(?i:"generico")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return GENERICO;}
+(?i:"importar")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return IMPORTAR;}
+(?i:"largo")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return LARGO;}
+(?i:"lanza")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return LANZA;}
+(?i:"libreria")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return LIBRERIA;}
+(?i:"lista")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return LISTA;}
+(?i:"mientras")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return MIENTRAS;}
+(?i:"objeto")                 {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return OBJETO;}
+(?i:"otro")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return OTRO;}
+(?i:"para")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PARA;}
+(?i:"principio")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PRINCIPIO;}
+(?i:"privado")                {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PRIVADO;}
+(?i:"programa")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PROGRAMA;}
+(?i:"protegido")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PROTEGIDO;}
+(?i:"prueba")                 {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PRUEBA;}
+(?i:"publico")                {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return PUBLICO;}
+(?i:"rango")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return RANGO;}
+(?i:"real")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return REAL;}
+(?i:"referencia")             {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return REFERENCIA;}
+(?i:"registro")               {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return REGISTRO;}
+(?i:"repetir")                {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return REPETIR;}
+(?i:"salir")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SALIR;}
+(?i:"si")                     {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SI;}
+(?i:"signo")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SIGNO;}
+(?i:"siguiente")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SIGUIENTE;}
+(?i:"sino")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SINO;}
+(?i:"subprograma")            {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return SUBPROGRAMA;}
+(?i:"tabla")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return TABLA;}
+(?i:"tipo")                   {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return TIPO;}
+(?i:"ultima")                 {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return ULTIMA;}
+(?i:"valor")                  {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return VALOR;}
+(?i:"verdadero")              {nl(); fprintf(yyout, "palabra reservada: %s \n", yytext); return VERDADERO;}
 
   /* ============================================================================================= */
   /*  Identificadores  */
