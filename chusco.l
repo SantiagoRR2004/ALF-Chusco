@@ -6,6 +6,14 @@
 #include "chusco.h"
 
 int num_lineas = 0;
+
+void nl() {
+    printf("This is my custom function!\n");
+}
+
+
+
+
 %}
 
 %x COM
@@ -20,6 +28,7 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
   /* ============================================================================================= */
   /*  Palabras reservadas  */
 
+(?i:"abstracto")               fprintf(yyout, "linea: %d palabra reservada: %s \n", num_lineas, yytext);;
 
   /* ============================================================================================= */
   /*  Identificadores  */

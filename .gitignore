@@ -1,2 +1,2 @@
-chusco.flex/chusco
-chusco.flex/lex.yy.c
+chusco
+*.yy.c
