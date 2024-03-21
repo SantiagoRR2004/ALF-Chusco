@@ -18,8 +18,17 @@ void nl() {
 /* ============================================================================================= */
 /*  Macros  */
 
-SP             [ \t]
 IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
+
+NDECIMAL        [0-9]
+NOCTAL          [0-7]
+NHEXADECIMAL    [0-9a-fA-F]
+
+DECIMAL        {NDECIMAL}+
+OCTAL          %(o|O){NOCTAL}+
+HEXADECIMAL    %(x|X){NHEXADECIMAL}+
+
+SP             [ \t]
 
 /* ============================================================================================= */
 /*  Condiciones de arranque  */
@@ -102,10 +111,37 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
   /* ============================================================================================= */
   /*  Identificadores  */
 
-{IDENTIFICADOR}                   {nl(); fprintf(yyout, "identificador: %s \n", yytext);}
+{IDENTIFICADOR}                   {nl(); fprintf(yyout, "identificador: %s \n", yytext); return IDENTIFICADOR;}
 
   /* ============================================================================================= */
   /*  Constantes  */
+
+  /* =========================================================================== */
+  /*  Constantes enteras  */
+
+{DECIMAL}|{OCTAL}{HEXADECIMAL}     {nl(); fprintf(yyout, "ctc entera: %s \n", yytext); return CTC_ENTERA;}
+
+  /* =========================================================================== */
+  /*  Constantes reales  */
+
+{DECIMAL}?"."{DECIMAL}          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(o|O)({NOCTAL}+)?"."{NOCTAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(x|X)({NHEXADECIMAL})?"."{NHEXADECIMAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+
+{DECIMAL}"^"("+"|"-")?{DECIMAL}                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+{DECIMAL}?"."{DECIMAL}"^"("+"|"-")?{DECIMAL}          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+
+{OCTAL}"^"("+"|"-")?{NOCTAL}+                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(o|O)({NOCTAL}+)?"."{NOCTAL}+"^"("+"|"-")?{NOCTAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+
+{HEXADECIMAL}"^"("+"|"-")?{NHEXADECIMAL}+                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(x|X)({NHEXADECIMAL}+)?"."{NHEXADECIMAL}+"^"("+"|"-")?{NHEXADECIMAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+
+  /* =========================================================================== */
+  /*  Caracteres  */
+
+  /* =========================================================================== */
+  /*  Cadenas  */
 
 \"[^"]*\"                          {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
   /* [^"]* hace que coja cualquier carácter a excepción de una comilla. */
