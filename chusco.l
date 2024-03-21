@@ -162,6 +162,46 @@ SP             [ \t]
   /* ============================================================================================= */
   /*  Operadores  */
 
+"+"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"-"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"*"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"/"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"--"            {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return DEC;}
+"++"            {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return INC;}
+\\              {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"^"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+
+"<-"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return DESPI;}
+"->"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return DESPD;}
+
+":="            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIGNACION;}
+":+"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_SUMA;}
+":-"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_RESTA;}
+":*"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_MULT;}
+":/"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_DIV;}
+":"\\           {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_RESTO;}
+":^"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_POT;}
+":<"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_DESPI;}
+":>"            {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG_DESPD;}
+
+"."             {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"["             {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"]"             {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"{"             {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"}"             {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"::"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return CUATRO_PUNTOS;}
+
+"<"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
+">"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
+"<="            {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return LEQ;}
+">="            {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return GEQ;}
+"="             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
+"~="            {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return NEQ;}
+
+"~"             {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return (int)yytext[0];}
+"/"\\           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return AND;}
+\\"/"           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return OR;}
+
   /* ============================================================================================= */
   /*  Comentarios  */
 
