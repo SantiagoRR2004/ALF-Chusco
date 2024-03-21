@@ -150,6 +150,15 @@ SP             [ \t]
   /* ============================================================================================= */
   /*  Delimitadores  */
 
+"("             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+")"             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+":"             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+";"             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+","             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+".."            {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return DOS_PUNTOS;}
+"|"             {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return (int)yytext[0];}
+"=>"            {nl(); fprintf(yyout, "delimitador: %s \n", yytext); return FLECHA;}
+
   /* ============================================================================================= */
   /*  Operadores  */
 
