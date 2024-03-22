@@ -6,3 +6,5 @@ clean:
 	rm  lex.yy.c chusco
 test: chusco
 	./chusco prueba.chu
+test2: chusco
+	./chusco prueba2.chu
