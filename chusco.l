@@ -143,7 +143,7 @@ SP             [ \t]
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"[^"]*\"                          {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
+\"([^\"]|\%\")*\"                          {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
   /* [^"]* hace que coja cualquier carácter a excepción de una comilla. */
 
 
