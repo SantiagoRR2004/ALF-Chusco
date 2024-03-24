@@ -29,13 +29,10 @@ DECIMAL        {NDECIMAL}+
 OCTAL          %(o|O){NOCTAL}+
 HEXADECIMAL    %(x|X){NHEXADECIMAL}+
 
-SP             [ \t]
-
 /* ============================================================================================= */
 /*  Condiciones de arranque  */
 
 %x COMENTARIO
-%x CADENA
 
 /* ============================================================================================= */
 /*  Opciones  */
@@ -112,7 +109,7 @@ SP             [ \t]
   /* ============================================================================================= */
   /*  Identificadores  */
 
-{IDENTIFICADOR}                   {nl(); fprintf(yyout, "identificador: %s \n", yytext); return IDENTIFICADOR;}
+{IDENTIFICADOR}               {nl(); fprintf(yyout, "identificador: %s \n", yytext); return IDENTIFICADOR;}
 
   /* ============================================================================================= */
   /*  Constantes  */
@@ -125,32 +122,32 @@ SP             [ \t]
   /* =========================================================================== */
   /*  Constantes reales  */
 
-{DECIMAL}?"."{DECIMAL}          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
-%(o|O)({NOCTAL}+)?"."{NOCTAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
-%(x|X)({NHEXADECIMAL})?"."{NHEXADECIMAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+{DECIMAL}?"."{DECIMAL}                                          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(o|O)({NOCTAL}+)?"."{NOCTAL}+                                  {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(x|X)({NHEXADECIMAL})?"."{NHEXADECIMAL}+                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
 
-{DECIMAL}"^"("+"|"-")?{DECIMAL}                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
-{DECIMAL}?"."{DECIMAL}"^"("+"|"-")?{DECIMAL}          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+{DECIMAL}"^"("+"|"-")?{DECIMAL}                                 {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+{DECIMAL}?"."{DECIMAL}"^"("+"|"-")?{DECIMAL}                    {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
 
-{OCTAL}"^"("+"|"-")?{NOCTAL}+                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
-%(o|O)({NOCTAL}+)?"."{NOCTAL}+"^"("+"|"-")?{NOCTAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+{OCTAL}"^"("+"|"-")?{NOCTAL}+                                   {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
+%(o|O)({NOCTAL}+)?"."{NOCTAL}+"^"("+"|"-")?{NOCTAL}+            {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
 
 {HEXADECIMAL}"^"("+"|"-")?{NHEXADECIMAL}+                       {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
 %(x|X)({NHEXADECIMAL}+)?"."{NHEXADECIMAL}+"^"("+"|"-")?{NHEXADECIMAL}+          {nl(); fprintf(yyout, "ctc real: %s \n", yytext); return CTC_REAL;}
 
   /* =========================================================================== */
   /*  Caracteres  */
-\'([^\"\n%]|{CHARESCAPADOS})\'          {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
-\'%(25[0-5]|2[0-4]{NDECIMAL}|[01]?{NDECIMAL}?{NDECIMAL})\'         {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'([^\"\n%]|{CHARESCAPADOS})\'                                    {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'%(25[0-5]|2[0-4]{NDECIMAL}|[01]?{NDECIMAL}?{NDECIMAL})\'        {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
   /* 25[0-5]: valores del 250 al 255. 2[0-4]{NDECIMAL}: del 200 al 249
     [01]?{NDECIMAL}?{NDECIMAL}: del 0 al 199 (incluye posibles ceros a la izquierda)
   */
-\'%(o|O)(3{NOCTAL}{NOCTAL}|[012]?{NOCTAL}?{NOCTAL})\'        {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
-\'%(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})\'          {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'%(o|O)(3{NOCTAL}{NOCTAL}|[012]?{NOCTAL}?{NOCTAL})\'             {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'%(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})\'                         {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"([^\"]|%\")*\"                          {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
+\"([^\"]|%\")*\"      {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
   /* [^"]* hace que coja cualquier carácter a excepción de una comilla. */
 
 
