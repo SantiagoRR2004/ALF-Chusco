@@ -19,7 +19,6 @@ void nl() {
 /*  Macros  */
 
 IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
-CHARESCAPADOS  %(\'|\"|%|n|r|t)
 
 NDECIMAL        [0-9]
 NOCTAL          [0-7]
@@ -28,6 +27,16 @@ NHEXADECIMAL    [0-9a-fA-F]
 DECIMAL        {NDECIMAL}+
 OCTAL          %(o|O){NOCTAL}+
 HEXADECIMAL    %(x|X){NHEXADECIMAL}+
+
+CHAR_ESCAPADOS  %(\'|\"|%|n|r|t)
+CHAR_DECIMAL    %0*(25[0-5]|2[0-4]{NDECIMAL}|[01]?{NDECIMAL}?{NDECIMAL})     
+/* 25[0-5]: valores del 250 al 255. 2[0-4]{NDECIMAL}: del 200 al 249
+    [01]?{NDECIMAL}?{NDECIMAL}: del 0 al 199 (incluye posibles ceros a la izquierda)
+*/
+CHAR_OCTAL      %(o|O)(3{NOCTAL}{NOCTAL}|[012]?{NOCTAL}?{NOCTAL})
+CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
+
+
 
 /* ============================================================================================= */
 /*  Condiciones de arranque  */
@@ -137,18 +146,13 @@ HEXADECIMAL    %(x|X){NHEXADECIMAL}+
 
   /* =========================================================================== */
   /*  Caracteres  */
-\'([^\"\n%]|{CHARESCAPADOS})\'                                    {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
-\'%(25[0-5]|2[0-4]{NDECIMAL}|[01]?{NDECIMAL}?{NDECIMAL})\'        {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
-  /* 25[0-5]: valores del 250 al 255. 2[0-4]{NDECIMAL}: del 200 al 249
-    [01]?{NDECIMAL}?{NDECIMAL}: del 0 al 199 (incluye posibles ceros a la izquierda)
-  */
-\'%(o|O)(3{NOCTAL}{NOCTAL}|[012]?{NOCTAL}?{NOCTAL})\'             {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
-\'%(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})\'                         {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'([^\"\n%]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL})\'  {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"([^\"]|%\")*\"      {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
-  /* [^"]* hace que coja cualquier carácter a excepción de una comilla. */
+\"([^\"%\n0123456789]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL}|(%\n))*\"      {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
+  /* [^\"\n%]* hace que coja cualquier carácter a excepción de una comilla, salto de línea o %. */
 
 
   /* ============================================================================================= */
