@@ -53,17 +53,17 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 
 #{ Cadenas #}
 "" "dos" "abstracto"
-"a" "9" "?" "あ" "Ɣ" "ヿ" "Ǿ" "ñ" "'"
+"a" "?" "あ" "Ɣ" "ヿ" "Ǿ" "ñ" "'"
 "%'" "%"" "%%" "%n" "%r" "%t"
 "%00000" "%1" "%145" "%0255" "%255"
 "%o171"
 "%xD" "%X1f" "%x00" "%XaA"
 
-"a9? あƔ    ヿǾñ%
+"a? あƔ    ヿǾñ%
 %'%"%%      %n%r%t            %
 %00000 %1 %145 %0255 %255 %
 %o171 %
-%xD %X1f %x00 %XaA 256"
+%xD %X1f %x00 %XaA"
 
 "%nRadio de la {circunferencia}: "
 "primera %
