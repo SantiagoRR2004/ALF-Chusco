@@ -63,7 +63,7 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 %'%"%%      %n%r%t            %
 %00000 %1 %145 %0255 %255 %
 %o171 %
-%xD %X1f %x00 %XaA"
+%xD %X1f %x00 %XaA 256"
 
 "%nRadio de la {circunferencia}: "
 "primera %
@@ -72,7 +72,11 @@ tercera"
 
 
 #{ Cadenas Errores #}
-"\n" """ "%"
+"\n" 
+"""
+"%"
+"
+"
 "%256"
 "%o388" "%O388" "%oa5" "%012" "%o9" "%O9"
 "%x" "%X" "%x001" "%X001" "%FF1"
