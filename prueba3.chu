@@ -1,0 +1,146 @@
+#{ Palabras reservadas #}
+abstracto booleano bucle caracter casos clase como constante constructor corto cuando de
+descendente destructor devolver diccionario en entero entonces enumeracion es especifico
+excepcion exportar falso fin final finalmente generico importar largo lanza libreria lista
+mientras objeto otro para principio privado programa protegido prueba publico rango real
+referencia registro repetir salir si signo siguiente sino subprograma tabla tipo ultima
+valor verdadero
+
+
+#{ Identificadores #}
+uno _25diciembre tabla_123 TABLA Array_Modificado _
+
+
+#{ No es identificador #}
+úno 25diciembre
+
+
+#{ Constantes enteras #}
+25 38 52184
+%O57 %O23 %o23
+%x23 %XFfF %XABCDEF %Xabcdef %xAbCdEf
+
+
+#{ No es constante entera #}
+%oa5 %012 %af8 %o9 %O9
+
+
+#{ Constantes reales #}
+.45 38.25 %XF.0a %o.523
+%O27.5^-7 45^10 .72^+1 %xF8^-a4 %O.254^2
+
+
+#{ No es constante reale #}
+25^-%x45 %X75.%O9af %X75^%O9af %X75^9af
+
+
+#{ Caracteres #}
+'a' '9' '?' ' ' 'あ' 'Ɣ' 'ヿ' 'Ǿ' 'ñ'
+'%'' '%"' '%%' '%n' '%r' '%t'
+'%xD' '%X1f'
+'%00000' '%1' '%145' '%0255' '%255'
+'%o171'
+'%xD' '%X1f' '%x00' '%XaA'
+
+
+#{ Caracteres Errores #}
+'dos' 'abstracto'
+'\n' ''' '%' ''
+'%256'
+'%o388' '%O388' '%oa5' '%012' '%o9' '%O9'
+'%x' '%X' '%x001' '%X001' '%FF1'
+
+
+#{ Cadenas #}
+"" "dos" "abstracto"
+"a" "9" "?" "あ" "Ɣ" "ヿ" "Ǿ" "ñ" "'"
+"%'" "%"" "%%" "%n" "%r" "%t"
+"%00000" "%1" "%145" "%0255" "%255"
+"%o171"
+"%xD" "%X1f" "%x00" "%XaA"
+
+"a9? あƔ    ヿǾñ%
+%'%"%%      %n%r%t            %
+%00000 %1 %145 %0255 %255 %
+%o171 %
+%xD %X1f %x00 %XaA"
+
+"%nRadio de la {circunferencia}: "
+"primera %
+segunda %
+tercera"
+
+
+#{ Cadenas Errores #}
+"\n" """ "%"
+"%256"
+"%o388" "%O388" "%oa5" "%012" "%o9" "%O9"
+"%x" "%X" "%x001" "%X001" "%FF1"
+
+
+#{ Delimitadores #}
+():;,..|=>
+( ) : ; , .. | =>
+
+
+#{ Operadores aritméticos #}
++-*/--++\^
++ - * / -- ++ \ ^
+
+
+#{ Operadores de bits #}
+<-->
+<- ->
+
+
+#{ Operadores de asignación #}
+:=:+:-:*:/:\:^:<:> 
+:= :+ :- :* :/ :\ :^ :< :> 
+
+
+#{ Operadores de acceso a memoria #}
+.[]{}::
+. [ ] { } ::
+
+
+#{ Operadores relacionales #}
+<><=>==~=
+< > <= >= = ~=
+
+
+#{ Operadores lógicos #}
+~/\\/
+~ /\ \/
+
+
+#{ Comentarios #}
+## He puesto muchos comentarios multilínea durante esto
+#{ Aunque este 
+es un comentarios de 
+verdad#}
+## Está todo dividido por diferentes partes
+## En cada parte está más o menos el orden del enunciado
+
+
+#{ Espacios, Tabuladores o Saltos de Lı́nea con Identificadores #}
+
+         Lorem ipsum     dolor sit amet          consectetur 
+adipiscing elit      Quisque malesuada    risus vel
+ lib  ero pulvinar a consec     tetur neque tempor
+  Nunc dictum vitae m      agna ac varius Curab    itur      nibh turpis
+   dapib us nec lorem           amet sagittis molestie metus
+    Morbi    et placerat ri   sus sollicitudi     n tincidunt lorem
+     Mauris orn                  are
+
+
+#{ Errores #}
+## Algo no ASCII y que no sea operador o delimitador
+𐎀  𐎁  𐎂  𐎃  𐎄  𐎅  𐎆  ꞛ Ꞝ ꞝ Ꞟ ꞟ Ꞡ ꞡ % Ɣ # 
+## El resto de los errores es que no pertenezca a esa clase, pero sus
+## subpartes pueden ser válidas
+
+## El resto son dentro de las cadenas o Caracteres
+
+## Otro problema es que si abrimos un comentario multilínea y no lo cerramos continúa hasta el final
+
+## Esto no es un comentario porque no hay un salto de línea después, igual se puede arreglar.
