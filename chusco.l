@@ -42,6 +42,7 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
 /*  Condiciones de arranque  */
 
 %x COMENTARIO
+%x CADENA
 
 /* ============================================================================================= */
 /*  Opciones  */
@@ -146,13 +147,25 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
 
   /* =========================================================================== */
   /*  Caracteres  */
+
+
 \'([^\"\n%]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL})\'  {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
 
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"([^\"%\n0123456789]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL}|(%\n))*\"      {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
-  /* [^\"\n%]* hace que coja cualquier carácter a excepción de una comilla, salto de línea o %. */
+\"                               {nl(); BEGIN CADENA; fprintf(yyout, "cadena: %s", yytext);}
+
+<CADENA>[.]{-}[\"%{NDECIMAL}]             {fprintf(yyout, "%s", yytext);}
+<CADENA>{CHAR_ESCAPADOS}             {fprintf(yyout, "%s", yytext);}
+<CADENA>{CHAR_DECIMAL}             {fprintf(yyout, "%s", yytext);}
+<CADENA>{CHAR_OCTAL}             {fprintf(yyout, "%s", yytext);}
+<CADENA>{CHAR_HEXADECIMAL}             {fprintf(yyout, "%s", yytext);}
+<CADENA>%\n                         {fprintf(yyout, "%s", yytext);}
+<CADENA>\"                      {BEGIN 0; fprintf(yyout, "%s \n", yytext); return CTC_CADENA;}
+
+<CADENA>[\"\n%{NDECIMAL}"\n"]                     {fprintf(yyout, "ERROR en " );nl(); fprintf(yyout, "= %s ", yytext);}
+<CADENA>"\n"                                       {fprintf(yyout, "ERROR en " );nl(); fprintf(yyout, "= %s ", yytext);}
 
 
   /* ============================================================================================= */
