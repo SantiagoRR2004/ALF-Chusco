@@ -36,13 +36,10 @@ CHAR_DECIMAL    %0*(25[0-5]|2[0-4]{NDECIMAL}|[01]?{NDECIMAL}?{NDECIMAL})
 CHAR_OCTAL      %(o|O)(3{NOCTAL}{NOCTAL}|[012]?{NOCTAL}?{NOCTAL})
 CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
 
-
-
 /* ============================================================================================= */
 /*  Condiciones de arranque  */
 
 %x COMENTARIO
-%x CADENA
 
 /* ============================================================================================= */
 /*  Opciones  */
@@ -149,24 +146,12 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
   /*  Caracteres  */
 
 
-\'([^\"\n%]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL})\'  {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
+\'([^\"\n%]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL})\'             {nl(); fprintf(yyout, "ctc caracter: %s \n", yytext); return CTC_CARACTER;}
 
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"                               {nl(); BEGIN CADENA; fprintf(yyout, "cadena: %s", yytext);}
-
-<CADENA>[.]{-}[\"%{NDECIMAL}]             {fprintf(yyout, "%s", yytext);}
-<CADENA>{CHAR_ESCAPADOS}             {fprintf(yyout, "%s", yytext);}
-<CADENA>{CHAR_DECIMAL}             {fprintf(yyout, "%s", yytext);}
-<CADENA>{CHAR_OCTAL}             {fprintf(yyout, "%s", yytext);}
-<CADENA>{CHAR_HEXADECIMAL}             {fprintf(yyout, "%s", yytext);}
-<CADENA>%\n                         {fprintf(yyout, "%s", yytext);}
-<CADENA>\"                      {BEGIN 0; fprintf(yyout, "%s \n", yytext); return CTC_CADENA;}
-
-<CADENA>[\"\n%{NDECIMAL}"\n"]                     {fprintf(yyout, "ERROR en " );nl(); fprintf(yyout, "= %s ", yytext);}
-<CADENA>"\n"                                       {fprintf(yyout, "ERROR en " );nl(); fprintf(yyout, "= %s ", yytext);}
-
+\"([^\"%\n]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL}|(%\n))*\"     {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
 
   /* ============================================================================================= */
   /*  Delimitadores  */
