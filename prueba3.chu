@@ -70,17 +70,17 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 segunda %
 tercera"
 
-"%256"
+"%256" "%012"
 "%o388" "%O388" 
-"%x001" "%X001" "%FF1"
+"%x001" "%X001"
 
 #{ Cadenas Errores #}
-"\n" 
-"""
+"\n"
+## Eliminamos este """ porque es imposible
 "%"
 "
 "
-"%oa5" "%012" "%o9" "%O9"
+"%oa5" "%o9" "%O9" "%FF1"
 "%x" "%X"
 
 #{ Delimitadores #}

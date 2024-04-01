@@ -151,7 +151,7 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
   /* =========================================================================== */
   /*  Cadenas  */
 
-\"([^\"%\n]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL}|(%\n))*\"     {nl(); fprintf(yyout, "cadena: %s \n", yytext);}
+\"([^\"%\n]|{CHAR_ESCAPADOS}|{CHAR_DECIMAL}|{CHAR_OCTAL}|{CHAR_HEXADECIMAL}|(%\n))*\"     {nl(); fprintf(yyout, "cadena: %s \n", yytext); return CTC_CADENA;}
 
   /* ============================================================================================= */
   /*  Delimitadores  */
@@ -215,7 +215,8 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
 <COMENTARIO>.|\n                   ;
 <COMENTARIO>"#}"                   BEGIN 0;
 
-"##".*\n                           ;
+"##".*                           ;
+
 
   /* ============================================================================================= */
   /*  Errores  */
