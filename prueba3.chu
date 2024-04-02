@@ -1,14 +1,15 @@
 #{ Palabras reservadas #}
-abstracto booleano bucle caracter casos clase como constante constructor corto cuando de
-descendente destructor devolver diccionario en entero entonces enumeracion es especifico
-excepcion exportar falso fin final finalmente generico importar largo lanza libreria lista
-mientras objeto otro para principio privado programa protegido prueba publico rango real
-referencia registro repetir salir si signo siguiente sino subprograma tabla tipo ultima
+abstracto booleAno bucle caracter casos clase como constante constructor corto cuando de
+descendente destructor devolver Diccionario en entero entonces enumeraciOn es especifico
+excePcion exportar falso fin final finalmente generico importar largo lanza libreria lista
+mientras objeto otRo PARA principio privado programa protegido prueba publico rango real
+referencia registro repetir salir si signo siguiente sino subprOgrama taBla tipo ultima
 valor verdadero
 
 
 #{ Identificadores #}
 uno _25diciembre tabla_123 TABLA Array_Modificado _
+## TABLA es una palabra reservada
 
 
 #{ No es identificador #}
@@ -27,15 +28,15 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 
 #{ Constantes reales #}
 .45 38.25 %XF.0a %o.523
-%O27.5^-7 45^10 .72^+1 %xF8^-a4 %O.254^2
+%O27.5^-7 45^10 .72^+1 %xF8^-a4 %O.254^2 %X75^9af
 
 
-#{ No es constante reale #}
-25^-%x45 %X75.%O9af %X75^%O9af %X75^9af
+#{ No es constante real #}
+25^-%x45 %X75.%O9af %X75^%O9af
 
 
 #{ Caracteres #}
-'a' '9' '?' ' ' 'あ' 'Ɣ' 'ヿ' 'Ǿ' 'ñ'
+'a' '9' '?' ' '
 '%'' '%"' '%%' '%n' '%r' '%t'
 '%xD' '%X1f'
 '%00000' '%1' '%145' '%0255' '%255'
@@ -44,7 +45,7 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 
 
 #{ Caracteres Errores #}
-'dos' 'abstracto'
+'dos' 'abstracto' 'あ' 'Ɣ' 'ヿ' 'Ǿ' 'ñ'
 '\n' ''' '%' ''
 '%256'
 '%o388' '%O388' '%oa5' '%012' '%o9' '%O9'
@@ -52,7 +53,7 @@ uno _25diciembre tabla_123 TABLA Array_Modificado _
 
 
 #{ Cadenas #}
-"" "dos" "abstracto"
+"" "dos" "abstracto" "\n"
 "a" "?" "あ" "Ɣ" "ヿ" "Ǿ" "ñ" "'"
 "%'" "%"" "%%" "%n" "%r" "%t"
 "%00000" "%1" "%145" "%0255" "%255"
@@ -75,13 +76,16 @@ tercera"
 "%x001" "%X001"
 
 #{ Cadenas Errores #}
-"\n"
 ## Eliminamos este """ porque es imposible
 "%"
 "
 "
-"%oa5" "%o9" "%O9" "%FF1"
-"%x" "%X"
+"%oa5"
+"%o9"
+"%O9"
+"%FF1"
+"%x"
+"%X"
 
 #{ Delimitadores #}
 ():;,..|=>
