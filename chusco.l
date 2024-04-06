@@ -5,7 +5,7 @@
 /*  Código en C  */
 %{
 #include <stdio.h>
-#include "chusco.h"
+#include "chusco.tab.h"
 
 extern int yylineno;
 
