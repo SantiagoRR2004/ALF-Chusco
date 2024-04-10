@@ -226,7 +226,7 @@ CHAR_HEXADECIMAL %(x|X)({NHEXADECIMAL}?{NHEXADECIMAL})
 
 
 %%  /* ====================================================================================================================== */
-/*  Sección de rutinas de usuario  */
+/*  Sección de rutinas de usuario  
 
 int yywrap() {
   return(1);
@@ -250,3 +250,4 @@ int main(int argc, char *argv[]) {
     }
     }
   }
+*/

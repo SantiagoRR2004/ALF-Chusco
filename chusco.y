@@ -39,8 +39,8 @@
 /************/
 /* programa */
 /************/
-
 /*
+
 programa :: = definicion_programa | definicion_libreria
 definicion_programa ::= ’programa’ IDENTIFICADOR ’;’ codigo_programa
 codigo_programa ::= [ libreria ]* cuerpo_subprograma
@@ -148,10 +148,17 @@ caso ::= ’cuando’ entradas ’=>’ [ instruccion ]+
 entradas ::= [ entrada ’:’ ]* entrada
 entrada ::= expresion [ ’..’ expresion ]? | ’otro’
 instruccion_bucle ::= [ IDENTIFICADOR ’:’ ]? clausula_iteracion [ instruccion ]+ ’fin’ ’bucle’
-clausula_iteracion ::= ’para’ IDENTIFICADOR [ ’:’ especificacion_tipo ]? ’en’ expresion
-| ’repetir’ IDENTIFICADOR [ ’:’ especificacion_tipo ]?
-’en’ rango [ ’descendente’ ]?
-| ’mientras’ expresion
+*/
+
+/* HECHO
+clausula_iteracion : PARA IDENTIFICADOR ':' especificacion_tipo  EN expresion
+| PARA IDENTIFICADOR EN expresion
+| REPETIR IDENTIFICADOR ':' especificacion_tipo EN RANGO DESCENDENTE
+| REPETIR IDENTIFICADOR EN RANGO 
+| MIENTRAS expresion
+*/
+
+/*
 instruccion_interrupcion ::= ’siguiente’ [ cuando ]? ’;’
 | ’salir’ [ ’de’ IDENTIFICADOR ]? [ cuando ]? ’;’
 cuando ::= ’cuando’ expresion
@@ -184,12 +191,13 @@ operador_posfijo : INC | DEC;
 /*
 expresion_unaria ::= [ ’-’ ]? primario */
 
-/*
-primario ::= literal
-| objeto
-| [ ’objeto’ ]? llamada_subprograma
-| enumeraciones
-| ’(’ expresion ’)’
+/* LISTO
+primario : literal
+          | objeto
+          | OBJETO llamada_subprograma
+          | llamada_subprograma
+          | enumeraciones
+          | '(' expresion ')'
 */
 
 
@@ -200,13 +208,20 @@ objeto: nombre
       | objeto '[' expresion ']'
       | objeto '{' CTC_CADENA '}';
 
-
-/*
-enumeraciones ::= ’[’ expresion_condicional [ clausula_iteracion ]+ ’]’
-| ’[’ ( expresion )+ ’]’
-| ’{’ ( clave_valor )+ ’}’
-| ’{’ ( campo_valor )+ ’}’  */ 
-
+/* LISTO
+clausula_iteracionM : clausula_iteracion clausula_iteracionM
+                    | clausula_iteracion
+expresionCM : expresion ',' expresionCM
+            | expresion
+clave_valorCM : clave_valor ',' clave_valorCM
+              | clave_valor
+campo_valorCM : campo_valor ',' campo_valorCM
+              | campo_valor       
+enumeraciones : '[' expresion_condicional clausula_iteracionM ']'
+| '[' expresionCM ']'
+| '{' clave_valorCM '}'
+| '{' campo_valorCM '}'  
+*/
 
 expresion_condicional : expresion
                        | SI expresion ENTONCES expresion 
@@ -215,7 +230,6 @@ expresion_condicional : expresion
 clave_valor : CTC_CADENA FLECHA expresion;
 
 campo_valor : IDENTIFICADOR FLECHA expresion;
-
 
 %%
 
