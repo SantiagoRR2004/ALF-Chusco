@@ -39,22 +39,40 @@
 /************/
 /* programa */
 /************/
-/*
 
-programa : definicion_programa | definicion_libreria
-definicion_programa : PROGRAMA IDENTIFICADOR ';' codigo_programa
-codigo_programa : [ libreria ]* cuerpo_subprograma
-libreria : ’importar’ ’libreria’ nombre [ ’como’ IDENTIFICADOR ]? ';'
-| DE ’libreria’ nombre ’importar’ ( IDENTIFICADOR )+ ';'
-*/
+
+programa : definicion_programa | definicion_libreria;
+
+definicion_programa : PROGRAMA IDENTIFICADOR ';' codigo_programa;
+
+libreriaM : libreria libreriaM
+          | libreria ;
+
+codigo_programa : libreriaM cuerpo_subprograma
+          | cuerpo_subprograma ;
+
+
+identificadorCM : IDENTIFICADOR ',' identificadorCM
+          | IDENTIFICADOR;
+
+libreria : IMPORTAR LIBRERIA nombre COMO IDENTIFICADOR ';'
+          | IMPORTAR LIBRERIA nombre ';'
+          | DE LIBRERIA nombre IMPORTAR identificadorCM ';' ;
 
 nombre : IDENTIFICADOR | nombre CUATRO_PUNTOS IDENTIFICADOR;
 
 /*
-definicion_libreria : ’libreria’ IDENTIFICADOR ';' codigo_libreria
-codigo_libreria : [ libreria ]* [ exportaciones ]? [ declaracion ]+
-exportaciones : ’exportar’ ( nombre )+ ';'
-declaracion : declaracion_objeto | declaracion_tipo | declaracion_subprograma
+definicion_libreria : LIBRERIA IDENTIFICADOR ';' codigo_libreria ;
+
+declaracionM : declaracion declaracionM
+        | declaracion;
+
+codigo_libreria : [ libreria ]* [ exportaciones ]? declaracionM ;
+
+exportaciones : ’exportar’ ( nombre )+ ';' ;
+
+declaracion : declaracion_objeto | declaracion_tipo | declaracion_subprograma ;
+
 */
 
 /**************************/
@@ -147,7 +165,8 @@ parametrizacion : '(' [ declaracion_parametros ';' ]* declaracion_parametros ')'
 declaracion_parametros : ( IDENTIFICADOR )+ ':' [ modo ]? especificacion_tipo [ ASIGNACION expresion ]?
 modo : ’valor’ | ’referencia’
 tipo_resultado : DEVOLVER especificacion_tipo
-cuerpo_subprograma : [ declaracion ]* ’principio’ instruccionM FIN
+
+cuerpo_subprograma : [ declaracion ]* PRINCIPIO instruccionM FIN
 */
 
 /*****************/
