@@ -39,7 +39,7 @@
 /************/
 /* programa */
 /************/
-
+/*
 
 programa : definicion_programa | definicion_libreria;
 
@@ -59,6 +59,7 @@ libreria : IMPORTAR LIBRERIA nombre COMO IDENTIFICADOR ';'
           | IMPORTAR LIBRERIA nombre ';'
           | DE LIBRERIA nombre IMPORTAR identificadorCM ';' ;
 
+*/
 nombre : IDENTIFICADOR | nombre CUATRO_PUNTOS IDENTIFICADOR;
 
 /*
@@ -334,7 +335,38 @@ expresion_condicional : expresion
 clave_valor : CTC_CADENA FLECHA expresion;
 
 campo_valor : IDENTIFICADOR FLECHA expresion;
+/*
+A continuacion se implementar ́an los operadores de manera similar a como hemos hecho con los operandos, teniendo
+en cuenta sus precedencias y asociatividades. De mayor a menor precedencia:
+’-’ unario.
+’++’ y ’--’ (posincremento y posdecremento)
+’^’ (potencia)
+’*’, ’/’ y ’\’
+’+’ y ’-’.
+’<-’ y ’->’ (operadores de desplazamiento)
+’<’, ’>’, ’<=’, ’>=’, ’=’ y ’~=’
+’~’ (negacion logica)
+’/\’ (and logico)
+’\/’ (or logico)
+Todos los operadores anteriores son binarios, excepto ’-’ unario, ’++’, ’--’ y ’~’, que son unarios. Respecto a la
+asociatividad, ’^’ es asociativo por la derecha, mientras que ’-’ unario, ’++’, ’--’, ’~’, ’~’ ’<’, ’>’, ’<=’, ’>=’, ’=’ y ’~=’
+no son asociativos. El resto son asociativos por la izquierda.
+ESTO ESTABA EN EL ENUNCIADO DE LA PRACTICA
 
+
+%left AND OR
+%nonassoc '~' 
+%nonassoc '<' '>' LEQ GEQ '=' NEQ
+%left DESPI DESPD
+%left '+' '-'
+%left '*' '/'  ’\'
+%right '^'
+%nonassoc INC DEC
+%nonassoc '-'       ESTE ENTIENDO QUE NO SIRVE DE NADA
+
+
+
+*/
 %%
 
 int yyerror(char *s) {
@@ -348,7 +380,7 @@ int yywrap() {
 
 int main(int argc, char *argv[]) {
 
-  yydebug = 0;
+  yydebug = 1; /*En 1 printea más información sobre la ejecución del programa, camo cambios de estados */
 
   if (argc < 2) {
     printf("Uso: ./chusco NombreArchivo\n");
