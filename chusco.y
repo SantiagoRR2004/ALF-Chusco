@@ -39,7 +39,7 @@
 /************/
 /* programa */
 /************/
-/*
+
 
 programa : definicion_programa | definicion_libreria;
 
@@ -59,30 +59,36 @@ libreria : IMPORTAR LIBRERIA nombre COMO IDENTIFICADOR ';'
           | IMPORTAR LIBRERIA nombre ';'
           | DE LIBRERIA nombre IMPORTAR identificadorCM ';' ;
 
-*/
+
 nombre : IDENTIFICADOR | nombre CUATRO_PUNTOS IDENTIFICADOR;
 
-/*
+
 definicion_libreria : LIBRERIA IDENTIFICADOR ';' codigo_libreria ;
 
 declaracionM : declaracion declaracionM
         | declaracion;
 
-codigo_libreria : [ libreria ]* [ exportaciones ]? declaracionM ;
+codigo_libreria : libreriaM exportaciones declaracionM
+                  |libreriaM declaracionM
+                  |exportaciones declaracionM
+                  |declaracionM;
 
-exportaciones : ’exportar’ ( nombre )+ ';' ;
+exportaciones : EXPORTAR nombreCM ';' ;
+
+nombreCM : nombre ',' nombreCM
+        | nombre;
 
 declaracion : declaracion_objeto | declaracion_tipo | declaracion_subprograma ;
 
-*/
 
 /**************************/
 /* declaracion de objetos */
 /**************************/
 
-/*
-declaracion_objeto : ( IDENTIFICADOR )+ ':' ’constante’ especificacion_tipo ASIGNACION expresion ';'
-| ( IDENTIFICADOR )+ ':' especificacion_tipo [ ASIGNACION expresion ]? ';' */
+
+declaracion_objeto : identificadorCM ':' CONSTANTE especificacion_tipo ASIGNACION expresion ';'
+                    |identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'
+                    |identificadorCM ':' especificacion_tipo ';' ;
 
 especificacion_tipo : nombre | tipo_no_estructurado;
 
@@ -91,9 +97,9 @@ especificacion_tipo : nombre | tipo_no_estructurado;
 /* declaracion de tipos */
 /************************/
 
-/*
-declaracion_tipo : ’tipo’ IDENTIFICADOR ES tipo_no_estructurado ';'
-| ’tipo’ IDENTIFICADOR ES tipo_estructurado */
+
+declaracion_tipo : TIPO IDENTIFICADOR ES tipo_no_estructurado ';'
+| TIPO IDENTIFICADOR ES tipo_estructurado;
 
 
 tipo_no_estructurado : tipo_escalar | tipo_tabla | tipo_diccionario;
@@ -108,7 +114,6 @@ tipo_escalar : SIGNO tipo_basico longitud RANGO rango
               | tipo_basico;
 
 
-
 longitud : CORTO | LARGO;
 
 tipo_basico : BOOLEANO | CARACTER | ENTERO | REAL;
@@ -121,59 +126,87 @@ tipo_tabla : TABLA '(' expresion DOS_PUNTOS expresion ')' DE especificacion_tipo
 
 tipo_diccionario : DICCIONARIO DE especificacion_tipo;
 
-/*
 tipo_estructurado : tipo_registro | tipo_enumerado | clase;
-*/
 
-/*
 tipo_registro : REGISTRO campoM FIN REGISTRO;
 
 campoM : campo campoM
       | campo;
 
-campo : ( IDENTIFICADOR )+ ':' especificacion_tipo
-[ ASIGNACION expresion ]? ';';
+campo : identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'
+      | identificadorCM ':' especificacion_tipo ';';
 
-tipo_enumerado : ENUMERACION [ DE tipo_escalar ]? ( elemento_enumeracion )+ FIN ENUMERACION;
+tipo_enumerado : ENUMERACION DE tipo_escalar elemento_enumeracionCM FIN ENUMERACION;
+                |ENUMERACION elemento_enumeracionCM FIN ENUMERACION;
 
-elemento_enumeracion : IDENTIFICADOR [ ASIGNACION expresion ]?;
-*/
+elemento_enumeracionCM : elemento_enumeracion ',' elemento_enumeracionCM
+                      | elemento_enumeracion;
 
+elemento_enumeracion : IDENTIFICADOR ASIGNACION expresion
+                      |IDENTIFICADOR;
 
 /*************************/
 /* declaracion de clases */
 /*************************/
 
-/*
-clase : ’clase’ [ ’ultima’ ]? [ superclases ]? [ declaracion_componente ]+ FIN ’clase’
-superclases : '(' ( nombre )+ ')'
-declaracion_componente : [ visibilidad ]? componente
-visibilidad : ’publico’ | ’protegido’ | ’privado’
+clase : CLASE ULTIMA superclases declaracion_componenteM FIN CLASE
+       |CLASE ULTIMA declaracion_componenteM FIN CLASE
+       |CLASE superclases declaracion_componenteM FIN CLASE
+       |CLASE declaracion_componenteM FIN CLASE;
+
+declaracion_componenteM : declaracion_componente declaracion_componenteM
+                        | declaracion_componente;
+
+superclases : '(' nombreCM ')';
+
+declaracion_componente : visibilidad componente;
+                        |componente;
+
+visibilidad : PUBLICO | PROTEGIDO | PRIVADO;
+
 componente : declaracion_tipo
-| declaracion_objeto
-| ( modificador )* declaracion_subprograma
-modificador : ’constructor’ | ’destructor’ | ’generico’ | ABSTRACTO | ’especifico’ | ’final’
-*/
+            | declaracion_objeto
+            | modificadorCM declaracion_subprograma
+            | declaracion_subprograma;
+
+modificadorCM : modificador ',' modificadorCM
+              | modificador;
+
+modificador : CONSTRUCTOR | DESTRUCTOR | GENERICO | ABSTRACTO | ESPECIFICO | FINAL;
 
 /*******************************/
 /* declaracion de subprogramas */
 /*******************************/
 
-/*
-declaracion_subprograma : ’subprograma’ cabecera_subprograma cuerpo_subprograma ’subprograma’
-cabecera_subprograma : IDENTIFICADOR [ parametrizacion ]? [ tipo_resultado ]?
-parametrizacion : '(' [ declaracion_parametros ';' ]* declaracion_parametros ')'
-declaracion_parametros : ( IDENTIFICADOR )+ ':' [ modo ]? especificacion_tipo [ ASIGNACION expresion ]?
-modo : ’valor’ | ’referencia’
-tipo_resultado : DEVOLVER especificacion_tipo
+declaracion_subprograma : SUBPROGRAMA cabecera_subprograma cuerpo_subprograma SUBPROGRAMA;
 
-cuerpo_subprograma : [ declaracion ]* PRINCIPIO instruccionM FIN
-*/
+cabecera_subprograma : IDENTIFICADOR parametrizacion tipo_resultado
+                      |IDENTIFICADOR parametrizacion
+                      |IDENTIFICADOR tipo_resultado 
+                      |IDENTIFICADOR;
+
+parametrizacion : '(' declaracion_parametrosPCM ')';
+
+declaracion_parametrosPCM : declaracion_parametros ';' declaracion_parametrosPCM
+                          | declaracion_parametros;
+
+declaracion_parametros : identificadorCM ':' modo especificacion_tipo ASIGNACION expresion
+                        |identificadorCM ':' modo especificacion_tipo
+                        |identificadorCM ':' especificacion_tipo ASIGNACION expresion
+                        |identificadorCM ':' especificacion_tipo;
+
+modo : VALOR | REFERENCIA;
+
+tipo_resultado : DEVOLVER especificacion_tipo;
+
+cuerpo_subprograma : declaracionM PRINCIPIO instruccionM FIN
+                    |PRINCIPIO instruccionM FIN;
+
+
 
 /*****************/
 /* instrucciones */
 /*****************/
-
 
 instruccion : instruccion_asignacion
             | instruccion_devolver
@@ -226,7 +259,6 @@ entrada : expresion DOS_PUNTOS expresion
 instruccion_bucle : IDENTIFICADOR ':' clausula_iteracion instruccionM FIN BUCLE
           |clausula_iteracion instruccionM FIN BUCLE;
 
-
 clausula_iteracion : PARA IDENTIFICADOR ':' especificacion_tipo  EN expresion
               | PARA IDENTIFICADOR EN expresion
               | REPETIR IDENTIFICADOR ':' especificacion_tipo EN RANGO DESCENDENTE
@@ -235,15 +267,12 @@ clausula_iteracion : PARA IDENTIFICADOR ':' especificacion_tipo  EN expresion
               | REPETIR IDENTIFICADOR EN RANGO 
               | MIENTRAS expresion;
 
-
-
 instruccion_interrupcion : SIGUIENTE cuando ';'
           | SIGUIENTE ';'
           | SALIR DE IDENTIFICADOR cuando ';'
           | SALIR DE IDENTIFICADOR ';'
           | SALIR cuando ';'
           | SALIR ';';
-
 
 cuando : CUANDO expresion;
 
