@@ -108,13 +108,14 @@ declaracion : declaracion_objeto                                                
 
 
 declaracion_objeto 
-      :identificadorCM ':' CONSTANTE especificacion_tipo ASIGNACION expresion ';'
-      |identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'
-      |identificadorCM ':' especificacion_tipo ';' ;
+      :identificadorCM ':' CONSTANTE especificacion_tipo ASIGNACION expresion ';' {printf("declaracion_objeto -> identificadorCM : CONSTANTE especificacion_tipo = expresion;\n");}
+      |identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'           {printf("declaracion_objeto -> identificadorCM : especificacion_tipo = expresion;\n");}
+      |identificadorCM ':' especificacion_tipo ';'                                {printf("declaracion_objeto -> identificadorCM : especificacion_tipo;\n");}
+      ;
 
-especificacion_tipo : nombre 
-      | tipo_no_estructurado;
-
+especificacion_tipo : nombre                                                      {printf("especificacion_tipo -> nombre\n");}
+      | tipo_no_estructurado                                                     {printf("especificacion_tipo -> tipo_no_estructurado\n");}
+      ;
 
 /************************/
 /* declaracion de tipos */
@@ -122,127 +123,127 @@ especificacion_tipo : nombre
 
 
 declaracion_tipo 
-      : TIPO IDENTIFICADOR ES tipo_no_estructurado ';'
-      | TIPO IDENTIFICADOR ES tipo_estructurado
+      : TIPO IDENTIFICADOR ES tipo_no_estructurado ';'                           {printf("declaracion_tipo -> TIPO ID ES tipo_no_estructurado;\n");}
+      | TIPO IDENTIFICADOR ES tipo_estructurado                                  {printf("declaracion_tipo -> TIPO ID ES tipo_estructurado;\n");}
       ;
 
 
-tipo_no_estructurado : tipo_escalar 
-      | tipo_tabla 
-      | tipo_diccionario
+tipo_no_estructurado : tipo_escalar                                              {printf("tipo_no_estructurado -> tipo_escalar\n");}
+      | tipo_tabla                                                               {printf("tipo_no_estructurado -> tipo_tabla\n");}
+      | tipo_diccionario                                                         {printf("tipo_no_estructurado -> tipo_diccionario\n");}
       ;
 
 tipo_escalar 
-      : SIGNO tipo_basico longitud RANGO rango
-      | SIGNO tipo_basico longitud
-      | SIGNO tipo_basico RANGO rango
-      | tipo_basico longitud RANGO rango
-      | SIGNO tipo_basico
-      | tipo_basico longitud
-      | tipo_basico RANGO rango
-      | tipo_basico
+      : SIGNO tipo_basico longitud RANGO rango                                  {printf("tipo_escalar -> SIGNO tipo_basico longitud RANGO rango\n");}
+      | SIGNO tipo_basico longitud                                              {printf("tipo_escalar -> SIGNO tipo_basico longitud\n");}
+      | SIGNO tipo_basico RANGO rango                                           {printf("tipo_escalar -> SIGNO tipo_basico RANGO rango\n");}
+      | tipo_basico longitud RANGO rango                                        {printf("tipo_escalar -> tipo_basico longitud RANGO rango\n");}
+      | SIGNO tipo_basico                                                       {printf("tipo_escalar -> SIGNO tipo_basico\n");}
+      | tipo_basico longitud                                                    {printf("tipo_escalar -> tipo_basico longitud\n");}
+      | tipo_basico RANGO rango                                                 {printf("tipo_escalar -> tipo_basico RANGO rango\n");}
+      | tipo_basico                                                             {printf("tipo_escalar -> tipo_basico\n");}
       ;
 
 
-longitud : CORTO 
-      | LARGO
+longitud : CORTO                                                                {printf("longitud -> CORTO\n");}
+      | LARGO                                                                   {printf("longitud -> LARGO\n");}
       ;
 
-tipo_basico : BOOLEANO 
-      | CARACTER 
-      | ENTERO 
-      | REAL
+tipo_basico : BOOLEANO                                                          {printf("tipo_basico -> BOOLEANO\n");}
+      | CARACTER                                                                {printf("tipo_basico -> CARACTER\n");}
+      | ENTERO                                                                  {printf("tipo_basico -> ENTERO\n");}
+      | REAL                                                                    {printf("tipo_basico -> REAL\n");}
       ;
 
 rango 
-      : expresion DOS_PUNTOS expresion DOS_PUNTOS expresion
-      | expresion DOS_PUNTOS expresion
+      : expresion DOS_PUNTOS expresion DOS_PUNTOS expresion                     {printf("rango -> expresion : expresion : expresion\n");}
+      | expresion DOS_PUNTOS expresion                                          {printf("rango -> expresion : expresion\n");}
       ;
 
 tipo_tabla 
-      : TABLA '(' expresion DOS_PUNTOS expresion ')' DE especificacion_tipo
-      | LISTA DE especificacion_tipo
+      : TABLA '(' expresion DOS_PUNTOS expresion ')' DE especificacion_tipo     {printf("tipo_tabla -> TABLA ( expresion : expresion ) DE especificacion_tipo\n");}
+      | LISTA DE especificacion_tipo                                            {printf("tipo_tabla -> LISTA DE especificacion_tipo\n");}
       ;
 
-tipo_diccionario : DICCIONARIO DE especificacion_tipo
-;
-
-tipo_estructurado : tipo_registro 
-      | tipo_enumerado 
-      | clase
+tipo_diccionario : DICCIONARIO DE especificacion_tipo                           {printf("tipo_diccionario -> DICCIONARIO DE especificacion_tipo\n");}
       ;
 
-tipo_registro : REGISTRO campoM FIN REGISTRO
+tipo_estructurado : tipo_registro                                               {printf("tipo_estructurado -> tipo_registro\n");}
+      | tipo_enumerado                                                          {printf("tipo_estructurado -> tipo_enumerado\n");}
+      | clase                                                                   {printf("tipo_estructurado -> clase\n");}
       ;
 
-campoM : campo campoM
-      | campo
+tipo_registro : REGISTRO campoM FIN REGISTRO                                    {printf("tipo_registro -> REGISTRO campoM FIN REGISTRO\n");}
       ;
 
-campo : identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'
-      | identificadorCM ':' especificacion_tipo ';'
+campoM : campo campoM                                                           {printf("campoM -> campo campoM\n");}
+      | campo                                                                   {printf("campoM -> campo\n");}
+      ;
+
+campo : identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'        {printf("campo -> identificadorCM : especificacion_tipo := expresion;\n");}
+      | identificadorCM ':' especificacion_tipo ';'                             {printf("campo -> identificadorCM : especificacion_tipo;\n");}
       ;
 
 tipo_enumerado 
-      : ENUMERACION DE tipo_escalar elemento_enumeracionCM FIN ENUMERACION;
-      |ENUMERACION elemento_enumeracionCM FIN ENUMERACION
+      : ENUMERACION DE tipo_escalar elemento_enumeracionCM FIN ENUMERACION      {printf("tipo_enumerado -> ENUMERACION DE tipo_escalar elemento_enumeracionCM FIN ENUMERACION\n");}
+      | ENUMERACION elemento_enumeracionCM FIN ENUMERACION                      {printf("tipo_enumerado -> ENUMERACION elemento_enumeracionCM FIN ENUMERACION\n");}
       ;
 
 elemento_enumeracionCM 
-      : elemento_enumeracion ',' elemento_enumeracionCM
-      | elemento_enumeracion
+      : elemento_enumeracion ',' elemento_enumeracionCM                         {printf("elemento_enumeracionCM -> elemento_enumeracion , elemento_enumeracionCM\n");}
+      | elemento_enumeracion                                                    {printf("elemento_enumeracionCM -> elemento_enumeracion\n");}
       ;
 
 elemento_enumeracion 
-      : IDENTIFICADOR ASIGNACION expresion
-      | IDENTIFICADOR
+      : IDENTIFICADOR ASIGNACION expresion                                      {printf("elemento_enumeracion -> ID := expresion\n");}
+      | IDENTIFICADOR                                                           {printf("elemento_enumeracion -> ID\n");}
       ;
 
 /*************************/
 /* declaracion de clases */
 /*************************/
 
-clase : CLASE ULTIMA superclases declaracion_componenteM FIN CLASE
-      |CLASE ULTIMA declaracion_componenteM FIN CLASE
-      |CLASE superclases declaracion_componenteM FIN CLASE
-      |CLASE declaracion_componenteM FIN CLASE
+clase : CLASE ULTIMA superclases declaracion_componenteM FIN CLASE              {printf("clase -> CLASE ULTIMA superclases declaracion_componenteM FIN CLASE\n");}
+      |CLASE ULTIMA declaracion_componenteM FIN CLASE                           {printf("clase -> CLASE ULTIMA declaracion_componenteM FIN CLASE\n");}
+      |CLASE superclases declaracion_componenteM FIN CLASE                      {printf("clase -> CLASE superclases declaracion_componenteM FIN CLASE\n");}
+      |CLASE declaracion_componenteM FIN CLASE                                  {printf("clase -> CLASE declaracion_componenteM FIN CLASE\n");}
       ;
 
 declaracion_componenteM 
-      : declaracion_componente declaracion_componenteM
-      | declaracion_componente
+      : declaracion_componente declaracion_componenteM                          {printf("declaracion_componenteM -> declaracion_componente declaracion_componenteM\n");}
+      | declaracion_componente                                                  {printf("declaracion_componenteM -> declaracion_componente\n");}
       ;
 
-superclases : '(' nombreCM ')'
+superclases : '(' nombreCM ')'                                                  {printf("superclases -> ( nombreCM )\n");}
       ;
 
 declaracion_componente 
-      : visibilidad componente
-      | componente
+      : visibilidad componente                                                  {printf("declaracion_componente -> visibilidad componente\n");}
+      | componente                                                              {printf("declaracion_componente -> componente\n");}
       ;
 
-visibilidad : PUBLICO 
-      | PROTEGIDO 
-      | PRIVADO
+visibilidad : PUBLICO                                                           {printf("visibilidad -> PUBLICO\n");}
+      | PROTEGIDO                                                               {printf("visibilidad -> PROTEGIDO\n");}
+      | PRIVADO                                                                 {printf("visibilidad -> PRIVADO\n");}
       ;
 
 componente 
-      : declaracion_tipo
-      | declaracion_objeto
-      | modificadorCM declaracion_subprograma
-      | declaracion_subprograma
+      : declaracion_tipo                                                        {printf("componente -> declaracion_tipo\n");}
+      | declaracion_objeto                                                      {printf("componente -> declaracion_objeto\n");}
+      | modificadorCM declaracion_subprograma                                   {printf("componente -> modificadorCM declaracion_subprograma\n");}
+      | declaracion_subprograma                                                 {printf("componente -> declaracion_subprograma\n");}
       ;
 
-modificadorCM : modificador ',' modificadorCM
-              | modificador
+modificadorCM : modificador ',' modificadorCM                                   {printf("modificadorCM -> modificador , modificadorCM\n");}
+              | modificador                                                     {printf("modificadorCM -> modificador\n");}
               ;
 
-modificador : CONSTRUCTOR 
-      | DESTRUCTOR 
-      | GENERICO 
-      | ABSTRACTO 
-      | ESPECIFICO 
-      | FINAL
+modificador : CONSTRUCTOR                                                       {printf("modificador -> CONSTRUCTOR\n");}
+      | DESTRUCTOR                                                              {printf("modificador -> DESTRUCTOR\n");}
+      | GENERICO                                                                {printf("modificador -> GENERICO\n");}
+      | ABSTRACTO                                                               {printf("modificador -> ABSTRACTO\n");}
+      | ESPECIFICO                                                              {printf("modificador -> ESPECIFICO\n");}
+      | FINAL                                                                   {printf("modificador -> FINAL\n");}
       ;
 
 /*******************************/
@@ -250,77 +251,78 @@ modificador : CONSTRUCTOR
 /*******************************/
 
 declaracion_subprograma 
-      : SUBPROGRAMA cabecera_subprograma cuerpo_subprograma SUBPROGRAMA
+      : SUBPROGRAMA cabecera_subprograma cuerpo_subprograma SUBPROGRAMA         {printf("declaracion_subprograma -> SUBPROGRAMA cabecera_subprograma cuerpo_subprograma SUBPROGRAMA\n");}
       ;
 
 cabecera_subprograma 
-      : IDENTIFICADOR parametrizacion tipo_resultado
-      |IDENTIFICADOR parametrizacion
-      |IDENTIFICADOR tipo_resultado 
-      |IDENTIFICADOR
+      : IDENTIFICADOR parametrizacion tipo_resultado                            {printf("cabecera_subprograma -> ID parametrizacion tipo_resultado\n");}
+      | IDENTIFICADOR parametrizacion                                           {printf("cabecera_subprograma -> ID parametrizacion\n");}
+      | IDENTIFICADOR tipo_resultado                                            {printf("cabecera_subprograma -> ID tipo_resultado\n");}
+      | IDENTIFICADOR                                                           {printf("cabecera_subprograma -> ID\n");}
       ;
 
-parametrizacion : '(' declaracion_parametrosPCM ')'
+parametrizacion : '(' declaracion_parametrosPCM ')'                             {printf("parametrizacion -> ( declaracion_parametrosPCM )\n");}
       ;
 
 declaracion_parametrosPCM 
-      : declaracion_parametros ';' declaracion_parametrosPCM
-      | declaracion_parametros
+      : declaracion_parametros ';' declaracion_parametrosPCM                    {printf("declaracion_parametrosPCM -> declaracion_parametros ; declaracion_parametrosPCM\n");}
+      | declaracion_parametros                                                  {printf("declaracion_parametrosPCM -> declaracion_parametros\n");}
       ;
 
 declaracion_parametros 
-      : identificadorCM ':' modo especificacion_tipo ASIGNACION expresion
-      |identificadorCM ':' modo especificacion_tipo
-      |identificadorCM ':' especificacion_tipo ASIGNACION expresion
-      |identificadorCM ':' especificacion_tipo
+      : identificadorCM ':' modo especificacion_tipo ASIGNACION expresion       {printf("declaracion_parametros -> identificadorCM : modo especificacion_tipo := expresion\n");}
+      | identificadorCM ':' modo especificacion_tipo                            {printf("declaracion_parametros -> identificadorCM : modo especificacion_tipo\n");}
+      | identificadorCM ':' especificacion_tipo ASIGNACION expresion            {printf("declaracion_parametros -> identificadorCM : especificacion_tipo := expresion\n");}
+      | identificadorCM ':' especificacion_tipo                                 {printf("declaracion_parametros -> identificadorCM : especificacion_tipo\n");}
       ;
 
-modo : VALOR 
-      | REFERENCIA
+modo 
+      : VALOR                                                                   {printf("modo -> VALOR\n");}
+      | REFERENCIA                                                              {printf("modo -> REFERENCIA\n");}
       ;
 
-tipo_resultado : DEVOLVER especificacion_tipo
+tipo_resultado : DEVOLVER especificacion_tipo                                   {printf("tipo_resultado -> DEVOLVER especificacion_tipo\n");}
       ;
 
 cuerpo_subprograma 
-      : declaracionM PRINCIPIO instruccionM FIN
-      |PRINCIPIO instruccionM FIN
+      : declaracionM PRINCIPIO instruccionM FIN                                 {printf("cuerpo_subprograma -> declaracionM PRINCIPIO instruccionM FIN\n");}
+      | PRINCIPIO instruccionM FIN                                              {printf("cuerpo_subprograma -> PRINCIPIO instruccionM FIN\n");}
       ;
-
 
 
 /*****************/
 /* instrucciones */
 /*****************/
 
-instruccion : instruccion_asignacion
-            | instruccion_devolver
-            | instruccion_llamada
-            | instruccion_si
-            | instruccion_casos
-            | instruccion_bucle
-            | instruccion_interrupcion
-            | instruccion_lanzamiento_excepcion
-            | instruccion_captura_excepcion
-            | ';'
+instruccion : instruccion_asignacion                                            {printf("instruccion -> instruccion_asignacion\n");}
+            | instruccion_devolver                                              {printf("instruccion -> instruccion_devolver\n");}
+            | instruccion_llamada                                               {printf("instruccion -> instruccion_llamada\n");}
+            | instruccion_si                                                    {printf("instruccion -> instruccion_si\n");}
+            | instruccion_casos                                                 {printf("instruccion -> instruccion_casos\n");}
+            | instruccion_bucle                                                 {printf("instruccion -> instruccion_bucle\n");}
+            | instruccion_interrupcion                                          {printf("instruccion -> instruccion_interrupcion\n");}
+            | instruccion_lanzamiento_excepcion                                 {printf("instruccion -> instruccion_lanzamiento_excepcion\n");}
+            | instruccion_captura_excepcion                                     {printf("instruccion -> instruccion_captura_excepcion\n");}
+            | ';'                                                               {printf("instruccion -> ;\n");}
             ;
 
-instruccion_asignacion : objeto op_asignacion expresion ';'
+instruccion_asignacion : objeto op_asignacion expresion ';'                     {printf("instruccion_asignacion -> objeto op_asignacion expresion ;\n");}
       ;
 
-op_asignacion : ASIGNACION 
-      | ASIG_SUMA 
-      | ASIG_RESTA 
-      | ASIG_MULT 
-      | ASIG_DIV 
-      | ASIG_RESTO 
-      | ASIG_POT 
-      | ASIG_DESPI 
-      | ASIG_DESPD;
+op_asignacion : ASIGNACION                                                      {printf("op_asignacion -> ASIGNACION\n");}
+      | ASIG_SUMA                                                               {printf("op_asignacion -> ASIG_SUMA\n");}
+      | ASIG_RESTA                                                              {printf("op_asignacion -> ASIG_RESTA\n");}
+      | ASIG_MULT                                                               {printf("op_asignacion -> ASIG_MULT\n");}
+      | ASIG_DIV                                                                {printf("op_asignacion -> ASIG_DIV\n");}
+      | ASIG_RESTO                                                              {printf("op_asignacion -> ASIG_RESTO\n");}
+      | ASIG_POT                                                                {printf("op_asignacion -> ASIG_POT\n");}
+      | ASIG_DESPI                                                              {printf("op_asignacion -> ASIG_DESPI\n");}
+      | ASIG_DESPD                                                              {printf("op_asignacion -> ASIG_DESPD\n");}
+      ; 
 
 instruccion_devolver 
-      : DEVOLVER expresion ';'
-      | DEVOLVER ';'
+      : DEVOLVER expresion ';'                                                  {printf("instruccion_devolver -> DEVOLVER expresion ;\n");}
+      | DEVOLVER ';'                                                            {printf("instruccion_devolver -> DEVOLVER ;\n");}
       ;
 
 instruccion_llamada : llamada_subprograma ';'
