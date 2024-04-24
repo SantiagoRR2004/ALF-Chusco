@@ -405,11 +405,12 @@ clausulas : clausulas_excepcion clausula_finalmente
 
 clausulas_excepcion 
       : clausula_excepcion_especificaM clausula_excepcion_general
+      | clausula_excepcion_general
       ;
 
 clausula_excepcion_especificaM 
       : clausula_excepcion_especifica clausula_excepcion_especificaM
-      | 
+      | clausula_excepcion_especifica
       ;
 
 clausula_excepcion_especifica : EXCEPCION '(' nombre ')' instruccionM
