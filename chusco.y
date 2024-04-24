@@ -408,8 +408,9 @@ clausulas_excepcion
       | clausula_excepcion_general
       ;
 
+/* Le dimos la vuelta a la primera porque provocaba un conflicto */
 clausula_excepcion_especificaM 
-      : clausula_excepcion_especifica clausula_excepcion_especificaM
+      : clausula_excepcion_especificaM clausula_excepcion_especifica
       | clausula_excepcion_especifica
       ;
 
