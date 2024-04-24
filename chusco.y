@@ -432,9 +432,45 @@ clausula_finalmente : FINALMENTE instruccionM
 
 /* Esto lo pusimos nosotros */
 /* Hay que revisar que sea correcto */
-expresion: expresion_condicional
+expresion: expresion_OR
       ;
 
+expresion_OR: expresion_OR OR expresion_AND
+      | expresion_AND
+      ;
+
+expresion_AND: expresion_AND AND expresion_negacion
+      | expresion_negacion
+      ;
+
+expresion_negacion: '~' expresion_relacionales
+      | expresion_relacionales
+      ;
+
+expresion_relacionales: expresion_relacionales '<' expresion_desplazamiento
+      | expresion_relacionales '>' expresion_desplazamiento
+      | expresion_relacionales LEQ expresion_desplazamiento
+      | expresion_relacionales GEQ expresion_desplazamiento
+      | expresion_relacionales '=' expresion_desplazamiento
+      | expresion_relacionales NEQ expresion_desplazamiento
+      | expresion_desplazamiento
+      ;
+
+expresion_desplazamiento: expresion_desplazamiento DESPI expresion_relacionales
+      | expresion_desplazamiento DESPD expresion_relacionales
+      | expresion_relacionales
+      ;
+
+expresion_aritmetica1: expresion_aritmetica1 '+' expresion_desplazamiento
+      | expresion_aritmetica1 '-' expresion_desplazamiento
+      | expresion_desplazamiento
+      ;
+
+expresion_aritmetica2 : expresion_aritmetica2 '*' expresion_aritmetica1
+      | expresion_aritmetica2 '/' expresion_aritmetica1
+      | expresion_aritmetica2 '\\' expresion_aritmetica1
+      | expresion_aritmetica1
+      ;
 
 expresion_potencia : expresion_posfija '^' expresion_potencia 
       | expresion_posfija
