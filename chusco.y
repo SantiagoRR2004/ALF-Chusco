@@ -50,16 +50,15 @@ definicion_programa
       ;
 
 libreriaM : libreria libreriaM                                                   {printf("libreriaM -> libreria libreriaM\n");}
-      | libreria                                                                 {printf("libreriaM -> libreria\n");}
+      |                                                                          {printf("libreriaM -> epsilon\n");}
       ;
 
 codigo_programa 
       : libreriaM cuerpo_subprograma                                             {printf("codigo_programa -> libreriaM cuerpo_subprograma\n");}
-      | cuerpo_subprograma                                                       {printf("codigo_programa -> cuerpo_subprograma\n");}
       ;
 
 
-identificadorCM : IDENTIFICADOR ',' identificadorCM                              {printf("identificadorCM -> ID, identificadorCM\n");}
+identificadorCM : identificadorCM  ',' IDENTIFICADOR                             {printf("identificadorCM -> identificadorCM, ID\n");}
       | IDENTIFICADOR                                                            {printf("identificadorCM -> ID\n");}
       ;
 
@@ -84,15 +83,13 @@ declaracionM : declaracion declaracionM                                         
 
 codigo_libreria 
       : libreriaM exportaciones declaracionM                                     {printf("codigo_libreria -> libreriaM exportaciones declaracionM\n");}
-      |libreriaM declaracionM                                                    {printf("codigo_libreria -> libreriaM declaracionM\n");}
-      |exportaciones declaracionM                                                {printf("codigo_libreria -> exportaciones declaracionM\n");}
-      |declaracionM                                                              {printf("codigo_libreria -> declaracionM\n");}
+      |libreriaM declaracionM                                                    {printf("codigo_libreria -> libreriaM declaracionM\n");}                                                       
       ;
 
 exportaciones : EXPORTAR nombreCM ';'                                            {printf("exportaciones -> EXPORTAR nombreCM;\n");}
       ;
 
-nombreCM : nombre ',' nombreCM                                                   {printf("nombreCM -> nombre, nombreCM\n");}
+nombreCM : nombreCM ',' nombre                                                   {printf("nombreCM -> nombre, nombreCM\n");}
       | nombre                                                                   {printf("nombreCM -> nombre\n");}
       ;
 
@@ -513,11 +510,19 @@ literal
       | CTC_CADENA                                                              {printf("literal -> CTC_CADENA\n");}
       ;
 
+expresionCM : expresionCM  ',' expresion                                        {printf("expresionCM -> expresionCM , expresion\n");}
+      | expresion                                                               {printf("expresionCM -> expresion\n");}
+      ;
+
+cadenaCM : cadenaCM ',' CTC_CADENA                                              {printf("cadenaCM -> cadenaCM , CTC_CADENA\n");}
+      | CTC_CADENA                                                              {printf("cadenaCM -> CTC_CADENA\n");}
+      ;
+
 objeto
       : nombre                                                                  {printf("objeto -> nombre\n");}
       | objeto '.' IDENTIFICADOR                                                {printf("objeto -> objeto . ID\n");}
-      | objeto '[' expresion ']'                                                {printf("objeto -> objeto [ expresion ]\n");}
-      | objeto '{' CTC_CADENA '}'                                               {printf("objeto -> objeto { CTC_CADENA }\n");}
+      | objeto '[' expresionCM ']'                                              {printf("objeto -> objeto [ expresion ]\n");}
+      | objeto '{' cadenaCM '}'                                                 {printf("objeto -> objeto { CTC_CADENA }\n");}
       ;
 
 
@@ -525,9 +530,6 @@ clausula_iteracionM : clausula_iteracion clausula_iteracionM                    
       | clausula_iteracion                                                      {printf("clausula_iteracionM -> clausula_iteracion\n");}
       ;
 
-expresionCM : expresion ',' expresionCM                                         {printf("expresionCM -> expresion , expresionCM\n");}
-      | expresion                                                               {printf("expresionCM -> expresion\n");}
-      ;
 
 
 clave_valorCM : clave_valor ',' clave_valorCM                                   {printf("clave_valorCM -> clave_valor , clave_valorCM\n");}
