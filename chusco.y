@@ -435,11 +435,11 @@ clausula_finalmente : FINALMENTE instruccionM                                   
 expresion: expresion_OR                                                         {printf("expresion -> expresion_OR\n");}
       ;
 
-expresion_OR: expresion_OR OR expresion_AND                                     {printf("expresion_OR -> expresion_OR \/ expresion_AND\n");}
+expresion_OR: expresion_OR OR expresion_AND                                     {printf("expresion_OR -> expresion_OR \\/ expresion_AND\n");}
       | expresion_AND                                                           {printf("expresion_OR -> expresion_AND\n");}
       ;
 
-expresion_AND: expresion_AND AND expresion_negacion                             {printf("expresion_AND -> expresion_AND /\ expresion_negacion\n");}
+expresion_AND: expresion_AND AND expresion_negacion                             {printf("expresion_AND -> expresion_AND /\\ expresion_negacion\n");}
       | expresion_negacion                                                      {printf("expresion_AND -> expresion_negacion\n");}
       ;
 
@@ -468,7 +468,7 @@ expresion_aritmetica1: expresion_aritmetica1 '+' expresion_aritmetica2          
 
 expresion_aritmetica2 : expresion_aritmetica2 '*' expresion_potencia            {printf("expresion_aritmetica2 -> expresion_aritmetica2 * expresion_potencia\n");}
       | expresion_aritmetica2 '/' expresion_potencia                            {printf("expresion_aritmetica2 -> expresion_aritmetica2 / expresion_potencia\n");}
-      | expresion_aritmetica2 '\\' expresion_potencia                           {printf("expresion_aritmetica2 -> expresion_aritmetica2 \ expresion_potencia\n");}
+      | expresion_aritmetica2 '\\' expresion_potencia                           {printf("expresion_aritmetica2 -> expresion_aritmetica2 \\ expresion_potencia\n");}
       | expresion_potencia                                                      {printf("expresion_aritmetica2 -> expresion_potencia\n");}
       ;
 
