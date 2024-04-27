@@ -461,20 +461,20 @@ expresion_relacionales: expresion_relacionales '<' expresion_desplazamiento     
       | expresion_desplazamiento                                                {printf("expresion_relacionales -> expresion_desplazamiento\n");}
       ;
 
-expresion_desplazamiento: expresion_desplazamiento DESPI expresion_relacionales {printf("expresion_desplazamiento -> expresion_desplazamiento <- expresion_relacionales\n");}
-      | expresion_desplazamiento DESPD expresion_relacionales                   {printf("expresion_desplazamiento -> expresion_desplazamiento -> expresion_relacionales\n");}
-      | expresion_relacionales                                                  {printf("expresion_desplazamiento -> expresion_relacionales\n");}
+expresion_desplazamiento: expresion_desplazamiento DESPI expresion_aritmetica1  {printf("expresion_desplazamiento -> expresion_desplazamiento <- expresion_aritmetica1\n");}
+      | expresion_desplazamiento DESPD expresion_aritmetica1                    {printf("expresion_desplazamiento -> expresion_desplazamiento -> expresion_aritmetica1\n");}
+      | expresion_aritmetica1                                                   {printf("expresion_desplazamiento -> expresion_aritmetica1\n");}
       ;
 
-expresion_aritmetica1: expresion_aritmetica1 '+' expresion_desplazamiento       {printf("expresion_aritmetica1 -> expresion_aritmetica1 + expresion_desplazamiento\n");}
-      | expresion_aritmetica1 '-' expresion_desplazamiento                      {printf("expresion_aritmetica1 -> expresion_aritmetica1 - expresion_desplazamiento\n");}
-      | expresion_desplazamiento                                                {printf("expresion_aritmetica1 -> expresion_desplazamiento\n");}
+expresion_aritmetica1: expresion_aritmetica1 '+' expresion_aritmetica2          {printf("expresion_aritmetica1 -> expresion_aritmetica1 + expresion_aritmetica2\n");}
+      | expresion_aritmetica1 '-' expresion_aritmetica2                         {printf("expresion_aritmetica1 -> expresion_aritmetica1 - expresion_aritmetica2\n");}
+      | expresion_aritmetica2                                                   {printf("expresion_aritmetica1 -> expresion_aritmetica2\n");}
       ;
 
-expresion_aritmetica2 : expresion_aritmetica2 '*' expresion_aritmetica1         {printf("expresion_aritmetica2 -> expresion_aritmetica2 * expresion_aritmetica1\n");}
-      | expresion_aritmetica2 '/' expresion_aritmetica1                         {printf("expresion_aritmetica2 -> expresion_aritmetica2 / expresion_aritmetica1\n");}
-      | expresion_aritmetica2 '\\' expresion_aritmetica1                        {printf("expresion_aritmetica2 -> expresion_aritmetica2 \ expresion_aritmetica1\n");}
-      | expresion_aritmetica1                                                   {printf("expresion_aritmetica2 -> expresion_aritmetica1\n");}
+expresion_aritmetica2 : expresion_aritmetica2 '*' expresion_potencia            {printf("expresion_aritmetica2 -> expresion_aritmetica2 * expresion_potencia\n");}
+      | expresion_aritmetica2 '/' expresion_potencia                            {printf("expresion_aritmetica2 -> expresion_aritmetica2 / expresion_potencia\n");}
+      | expresion_aritmetica2 '\\' expresion_potencia                           {printf("expresion_aritmetica2 -> expresion_aritmetica2 \ expresion_potencia\n");}
+      | expresion_potencia                                                      {printf("expresion_aritmetica2 -> expresion_potencia\n");}
       ;
 
 expresion_potencia : expresion_posfija '^' expresion_potencia                   {printf("expresion_potencia -> expresion_posfija ^ expresion_potencia\n");}
