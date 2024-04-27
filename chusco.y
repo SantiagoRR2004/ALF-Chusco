@@ -353,12 +353,10 @@ casoM : caso casoM                                                              
 caso : CUANDO entradas FLECHA instruccionM                                      {printf("caso -> CUANDO entradas => instruccionM\n");}
       ;
 
-entradas : entradaM entrada                                                     {printf("entradas -> entradaM entrada\n");}
+entradas : entradas ':' entrada                                                 {printf("entradas -> entradaM : entrada\n");}
+      | entrada                                                                 {printf("entradas -> entrada\n");}
       ;
 
-entradaM : entrada ':' entradaM                                                 {printf("entradaM -> entrada : entradaM\n");}
-      |                                                                         {printf("entradaM -> ε\n");}
-      ;
 
 entrada : expresion DOS_PUNTOS expresion                                        {printf("entrada -> expresion .. expresion\n");}
           | expresion                                                           {printf("entrada -> expresion\n");}
