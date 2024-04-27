@@ -26,7 +26,7 @@
 %nonassoc '<' '>' LEQ GEQ '=' NEQ
 %left DESPI DESPD
 %left '+' '-'
-%left '*' '/' '%'
+%left '*' '/' '\\'
 %right '^'
 %nonassoc INC DEC
 /* %nonassoc '-' */
