@@ -66,6 +66,7 @@ libreria
       : IMPORTAR LIBRERIA nombre COMO IDENTIFICADOR ';'                          {printf("libreria -> IMPORTAR LIBRERIA nombre COMO ID;\n");}
       | IMPORTAR LIBRERIA nombre ';'                                             {printf("libreria -> IMPORTAR LIBRERIA nombre;\n");}
       | DE LIBRERIA nombre IMPORTAR identificadorCM ';'                          {printf("libreria -> DE LIBRERIA nombre IMPORTAR identificadorCM;\n");}
+      | error ';'                                                                {printf("libreria -> error;\n");yyerrok;}
       ;
 
 
@@ -159,6 +160,7 @@ rango
 
 tipo_tabla 
       : TABLA '(' expresion DOS_PUNTOS expresion ')' DE especificacion_tipo     {printf("tipo_tabla -> TABLA ( expresion : expresion ) DE especificacion_tipo\n");}
+      | TABLA '(' error ')' DE especificacion_tipo                              {printf("tipo_tabla -> TABLA ( error ) DE especificacion_tipo\n");yyerrok;}
       | LISTA DE especificacion_tipo                                            {printf("tipo_tabla -> LISTA DE especificacion_tipo\n");}
       ;
 
@@ -179,6 +181,7 @@ campoM : campo campoM                                                           
 
 campo : identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'        {printf("campo -> identificadorCM : especificacion_tipo := expresion;\n");}
       | identificadorCM ':' especificacion_tipo ';'                             {printf("campo -> identificadorCM : especificacion_tipo;\n");}
+      | error ';'                                                               {printf("campo -> error;\n");yyerrok;}
       ;
 
 tipo_enumerado 
@@ -211,7 +214,9 @@ declaracion_componenteM
       | declaracion_componente                                                  {printf("declaracion_componenteM -> declaracion_componente\n");}
       ;
 
-superclases : '(' nombreCM ')'                                                  {printf("superclases -> ( nombreCM )\n");}
+superclases 
+      : '(' nombreCM ')'                                                        {printf("superclases -> ( nombreCM )\n");}
+      | '(' error ')'                                                           {printf("superclases -> ( error )\n");yyerrok;}
       ;
 
 declaracion_componente 
@@ -258,7 +263,9 @@ cabecera_subprograma
       | IDENTIFICADOR                                                           {printf("cabecera_subprograma -> ID\n");}
       ;
 
-parametrizacion : '(' declaracion_parametrosPCM ')'                             {printf("parametrizacion -> ( declaracion_parametrosPCM )\n");}
+parametrizacion
+      : '(' declaracion_parametrosPCM ')'                                       {printf("parametrizacion -> ( declaracion_parametrosPCM )\n");}
+      | '(' error ')'                                                           {printf("parametrizacion -> ( error )\n");yyerrok;}
       ;
 
 declaracion_parametrosPCM 
@@ -303,7 +310,9 @@ instruccion : instruccion_asignacion                                            
             | ';'                                                               {printf("instruccion -> ;\n");}
             ;
 
-instruccion_asignacion : objeto op_asignacion expresion ';'                     {printf("instruccion_asignacion -> objeto op_asignacion expresion ;\n");}
+instruccion_asignacion
+      : objeto op_asignacion expresion ';'                                      {printf("instruccion_asignacion -> objeto op_asignacion expresion ;\n");}
+      | error ';'                                                               {printf("instruccion_asignacion -> error ;\n");yyerrok;}
       ;
 
 op_asignacion : ASIGNACION                                                      {printf("op_asignacion -> ASIGNACION\n");}
@@ -412,7 +421,9 @@ clausula_excepcion_especificaM
       | clausula_excepcion_especifica                                           {printf("clausula_excepcion_especificaM -> clausula_excepcion_especifica\n");}
       ;
 
-clausula_excepcion_especifica : EXCEPCION '(' nombre ')' instruccionM           {printf("clausula_excepcion_especifica -> EXCEPCION ( nombre ) instruccionM\n");}
+clausula_excepcion_especifica
+      : EXCEPCION '(' nombre ')' instruccionM                                   {printf("clausula_excepcion_especifica -> EXCEPCION ( nombre ) instruccionM\n");}
+      | EXCEPCION  '(' error ')' instruccionM                                   {printf("clausula_excepcion_especifica -> EXCEPCION ( error ) instruccionM\n");yyerrok;}
       ;
 
 clausula_excepcion_general : EXCEPCION instruccionM                             {printf("clausula_excepcion_general -> EXCEPCION instruccionM\n");}
@@ -495,9 +506,8 @@ primario : literal                                                              
       | llamada_subprograma                                                     {printf("primario -> llamada_subprograma\n");}
       | enumeraciones                                                           {printf("primario -> enumeraciones\n");}
       | '(' expresion ')'                                                       {printf("primario -> ( expresion )\n");}
+      | '(' error ')'                                                           {printf("primario -> ( error )\n");yyerrok;}
       ;
-
-
 
 literal 
       : VERDADERO                                                               {printf("literal -> VERDADERO\n");}
@@ -519,8 +529,10 @@ cadenaCM : cadenaCM ',' CTC_CADENA                                              
 objeto
       : nombre                                                                  {printf("objeto -> nombre\n");}
       | objeto '.' IDENTIFICADOR                                                {printf("objeto -> objeto . ID\n");}
-      | objeto '[' expresionCM ']'                                              {printf("objeto -> objeto [ expresion ]\n");}
-      | objeto '{' cadenaCM '}'                                                 {printf("objeto -> objeto { CTC_CADENA }\n");}
+      | objeto '[' expresionCM ']'                                              {printf("objeto -> objeto [ expresionCM ]\n");}
+      | objeto '[' error ']'                                                    {printf("objeto -> objeto [ error ]\n");yyerrok;}
+      | objeto '{' cadenaCM '}'                                                 {printf("objeto -> objeto { cadenaCM }\n");}
+      | objeto '{' error '}'                                                    {printf("objeto -> objeto { error }\n");yyerrok;}
       ;
 
 
@@ -539,9 +551,12 @@ campo_valorCM : campo_valor ',' campo_valorCM                                   
       ;
 
 
-enumeraciones : '[' expresion_condicional clausula_iteracionM ']'               {printf("enumeraciones -> [ expresion_condicional clausula_iteracionM ]\n");}
+enumeraciones
+      : '[' expresion_condicional clausula_iteracionM ']'                       {printf("enumeraciones -> [ expresion_condicional clausula_iteracionM ]\n");}
+      | '[' error ']'                                                           {printf("enumeraciones -> [ error ]\n");yyerrok;}
       | '[' expresionCM ']'                                                     {printf("enumeraciones -> [ expresionCM ]\n");}
       | '{' clave_valorCM '}'                                                   {printf("enumeraciones -> { clave_valorCM }\n");}
+      | '{' error '}'                                                           {printf("enumeraciones -> { error }\n");yyerrok;}
       | '{' campo_valorCM '}'                                                   {printf("enumeraciones -> { campo_valorCM }\n");}
       ;
 
