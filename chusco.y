@@ -41,12 +41,13 @@
 /************/
 
 
-programa : definicion_programa                                                   {printf("programa -> definicion_programa\n");}
-      | definicion_libreria                                                      {printf("programa -> definicion_libreria\n");}
+programa : definicion_programa                                                   {printf("EXITO: programa -> definicion_programa\n");}
+      | definicion_libreria                                                      {printf("EXITO: programa -> definicion_libreria\n");}
       ;
 
 definicion_programa
       : PROGRAMA IDENTIFICADOR ';' codigo_programa                               {printf("definicion_programa -> PROGRAMA ID; codigo_programa\n");}
+      | PROGRAMA IDENTIFICADOR ';' error                                         {printf("definicion_programa -> PROGRAMA ID; error\n");yyerrok;}
       ;
 
 libreriaM : libreria libreriaM                                                   {printf("libreriaM -> libreria libreriaM\n");}
@@ -76,6 +77,7 @@ nombre : IDENTIFICADOR                                                          
 
 definicion_libreria 
       : LIBRERIA IDENTIFICADOR ';' codigo_libreria                               {printf("definicion_libreria -> LIBRERIA ID; codigo_libreria\n");}
+      | LIBRERIA IDENTIFICADOR ';' error                                         {printf("definicion_libreria -> LIBRERIA ID; error\n");yyerrok;}
       ;
 
 declaracionM : declaracion declaracionM                                          {printf("declaracionM -> declaracion declaracionM\n");}
@@ -380,10 +382,10 @@ instruccion_bucle
 clausula_iteracion 
       : PARA IDENTIFICADOR ':' especificacion_tipo  EN expresion                {printf("clausula_iteracion -> PARA ID : especificacion_tipo EN expresion\n");}
       | PARA IDENTIFICADOR EN expresion                                         {printf("clausula_iteracion -> PARA ID EN expresion\n");}
-      | REPETIR IDENTIFICADOR ':' especificacion_tipo EN RANGO DESCENDENTE      {printf("clausula_iteracion -> REPETIR ID : especificacion_tipo EN RANGO DESCENDENTE\n");}
-      | REPETIR IDENTIFICADOR EN RANGO DESCENDENTE                              {printf("clausula_iteracion -> REPETIR ID EN RANGO DESCENDENTE\n");}
-      | REPETIR IDENTIFICADOR ':' especificacion_tipo EN RANGO                  {printf("clausula_iteracion -> REPETIR ID : especificacion_tipo EN RANGO\n");}
-      | REPETIR IDENTIFICADOR EN RANGO                                          {printf("clausula_iteracion -> REPETIR ID EN RANGO\n");}
+      | REPETIR IDENTIFICADOR ':' especificacion_tipo EN rango DESCENDENTE      {printf("clausula_iteracion -> REPETIR ID : especificacion_tipo EN rango DESCENDENTE\n");}
+      | REPETIR IDENTIFICADOR EN rango DESCENDENTE                              {printf("clausula_iteracion -> REPETIR ID EN rango DESCENDENTE\n");}
+      | REPETIR IDENTIFICADOR ':' especificacion_tipo EN rango                  {printf("clausula_iteracion -> REPETIR ID : especificacion_tipo EN rango\n");}
+      | REPETIR IDENTIFICADOR EN rango                                          {printf("clausula_iteracion -> REPETIR ID EN rango\n");}
       | MIENTRAS expresion                                                      {printf("clausula_iteracion -> MIENTRAS expresion\n");}
       ;
 
@@ -579,7 +581,7 @@ campo_valor
 
 int yyerror(char *s) {
   fflush(stdout);
-  printf("***************** %s\n",s);
+  printf("******************************************************************************************** %s\n",s);
   }
 
 int yywrap() {
