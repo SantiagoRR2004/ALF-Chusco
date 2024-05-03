@@ -45,6 +45,7 @@
 
 programa : definicion_programa                                                   {printf("EXITO: programa -> definicion_programa\n");}
       | definicion_libreria                                                      {printf("EXITO: programa -> definicion_libreria\n");}
+      | error                                                                    {printf("ERROR: programa -> error\n");yyerrok;}
       ;
 
 definicion_programa
@@ -110,9 +111,10 @@ declaracion : declaracion_objeto                                                
 
 
 declaracion_objeto 
-      :identificadorCM ':' CONSTANTE especificacion_tipo ASIGNACION expresion ';' {printf("declaracion_objeto -> identificadorCM : CONSTANTE especificacion_tipo = expresion;\n");}
-      |identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'           {printf("declaracion_objeto -> identificadorCM : especificacion_tipo = expresion;\n");}
-      |identificadorCM ':' especificacion_tipo ';'                                {printf("declaracion_objeto -> identificadorCM : especificacion_tipo;\n");}
+      : identificadorCM ':' CONSTANTE especificacion_tipo ASIGNACION expresion ';' {printf("declaracion_objeto -> identificadorCM : CONSTANTE especificacion_tipo = expresion;\n");}
+      | identificadorCM ':' especificacion_tipo ASIGNACION expresion ';'           {printf("declaracion_objeto -> identificadorCM : especificacion_tipo = expresion;\n");}
+      | identificadorCM ':' especificacion_tipo ';'                                {printf("declaracion_objeto -> identificadorCM : especificacion_tipo;\n");}
+      | identificadorCM ':' error ';'                                             {printf("declaracion_objeto -> identificadorCM : error;\n");yyerrok;}
       ;
 
 especificacion_tipo : nombre                                                      {printf("especificacion_tipo -> nombre\n");}
@@ -312,11 +314,11 @@ instruccion : instruccion_asignacion                                            
             | instruccion_lanzamiento_excepcion                                 {printf("instruccion -> instruccion_lanzamiento_excepcion\n");}
             | instruccion_captura_excepcion                                     {printf("instruccion -> instruccion_captura_excepcion\n");}
             | ';'                                                               {printf("instruccion -> ;\n");}
+            | error                                                             {printf("instruccion -> error\n");yyerrok;}
             ;
 
 instruccion_asignacion
       : objeto op_asignacion expresion ';'                                      {printf("instruccion_asignacion -> objeto op_asignacion expresion ;\n");}
-      | error ';'                                                               {printf("instruccion_asignacion -> error ;\n");yyerrok;}
       ;
 
 op_asignacion : ASIGNACION                                                      {printf("op_asignacion -> ASIGNACION\n");}
