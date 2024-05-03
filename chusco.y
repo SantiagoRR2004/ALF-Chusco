@@ -5,6 +5,8 @@
   extern FILE *yyin;
   extern int yylex();
 
+  extern int yyerror(char *s);
+
   #define YYDEBUG 1
 
 %}
