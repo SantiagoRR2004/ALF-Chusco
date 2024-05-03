@@ -50,7 +50,6 @@ programa : definicion_programa                                                  
 
 definicion_programa
       : PROGRAMA IDENTIFICADOR ';' codigo_programa                               {printf("definicion_programa -> PROGRAMA ID; codigo_programa\n");}
-      | PROGRAMA IDENTIFICADOR ';' error                                         {printf("definicion_programa -> PROGRAMA ID; error\n");yyerrok;}
       ;
 
 libreriaM : libreria libreriaM                                                   {printf("libreriaM -> libreria libreriaM\n");}
@@ -70,7 +69,6 @@ libreria
       : IMPORTAR LIBRERIA nombre COMO IDENTIFICADOR ';'                          {printf("libreria -> IMPORTAR LIBRERIA nombre COMO ID;\n");}
       | IMPORTAR LIBRERIA nombre ';'                                             {printf("libreria -> IMPORTAR LIBRERIA nombre;\n");}
       | DE LIBRERIA nombre IMPORTAR identificadorCM ';'                          {printf("libreria -> DE LIBRERIA nombre IMPORTAR identificadorCM;\n");}
-      | error ';'                                                                {printf("libreria -> error;\n");yyerrok;}
       ;
 
 
@@ -80,7 +78,6 @@ nombre : IDENTIFICADOR                                                          
 
 definicion_libreria 
       : LIBRERIA IDENTIFICADOR ';' codigo_libreria                               {printf("definicion_libreria -> LIBRERIA ID; codigo_libreria\n");}
-      | LIBRERIA IDENTIFICADOR ';' error                                         {printf("definicion_libreria -> LIBRERIA ID; error\n");yyerrok;}
       ;
 
 declaracionM : declaracion declaracionM                                          {printf("declaracionM -> declaracion declaracionM\n");}
@@ -102,6 +99,7 @@ nombreCM : nombreCM ',' nombre                                                  
 declaracion : declaracion_objeto                                                 {printf("declaracion -> declaracion_objeto\n");}           
       | declaracion_tipo                                                         {printf("declaracion -> declaracion_tipo\n");} 
       | declaracion_subprograma                                                  {printf("declaracion -> declaracion_subprograma\n");}
+      | error                                                                    {printf("declaracion -> error\n");yyerrok;}
       ;
 
 
@@ -447,9 +445,9 @@ clausula_finalmente : FINALMENTE instruccionM                                   
 /* expresiones */
 /***************/
 
-/* Esto lo pusimos nosotros */
-/* Hay que revisar que sea correcto */
+
 expresion: expresion_OR                                                         {printf("expresion -> expresion_OR\n");}
+      | error                                                                   {printf("expresion -> error\n");yyerrok;}
       ;
 
 expresion_OR: expresion_OR OR expresion_AND                                     {printf("expresion_OR -> expresion_OR \\/ expresion_AND\n");}
@@ -512,7 +510,6 @@ primario : literal                                                              
       | llamada_subprograma                                                     {printf("primario -> llamada_subprograma\n");}
       | enumeraciones                                                           {printf("primario -> enumeraciones\n");}
       | '(' expresion ')'                                                       {printf("primario -> ( expresion )\n");}
-      | '(' error ')'                                                           {printf("primario -> ( error )\n");yyerrok;}
       ;
 
 literal 
@@ -536,9 +533,7 @@ objeto
       : nombre                                                                  {printf("objeto -> nombre\n");}
       | objeto '.' IDENTIFICADOR                                                {printf("objeto -> objeto . ID\n");}
       | objeto '[' expresionCM ']'                                              {printf("objeto -> objeto [ expresionCM ]\n");}
-      | objeto '[' error ']'                                                    {printf("objeto -> objeto [ error ]\n");yyerrok;}
       | objeto '{' cadenaCM '}'                                                 {printf("objeto -> objeto { cadenaCM }\n");}
-      | objeto '{' error '}'                                                    {printf("objeto -> objeto { error }\n");yyerrok;}
       ;
 
 
@@ -559,10 +554,8 @@ campo_valorCM : campo_valor ',' campo_valorCM                                   
 
 enumeraciones
       : '[' expresion_condicional clausula_iteracionM ']'                       {printf("enumeraciones -> [ expresion_condicional clausula_iteracionM ]\n");}
-      | '[' error ']'                                                           {printf("enumeraciones -> [ error ]\n");yyerrok;}
       | '[' expresionCM ']'                                                     {printf("enumeraciones -> [ expresionCM ]\n");}
       | '{' clave_valorCM '}'                                                   {printf("enumeraciones -> { clave_valorCM }\n");}
-      | '{' error '}'                                                           {printf("enumeraciones -> { error }\n");yyerrok;}
       | '{' campo_valorCM '}'                                                   {printf("enumeraciones -> { campo_valorCM }\n");}
       ;
 
