@@ -7,8 +7,8 @@ chusco.lex.c:	chusco.l
 clean:
 	rm  chusco.tab.c chusco.tab.h chusco.output lex.yy.c chusco
 test: chusco
-	./chusco prueba.chu
+	./chusco ChuscoPrograms/prueba.chu
 test2: chusco
-	./chusco prueba2.chu
+	./chusco ChuscoPrograms/prueba2.chu
 test3: chusco
-	./chusco prueba3.chu
+	./chusco ChuscoPrograms/prueba3.chu
