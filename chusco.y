@@ -462,12 +462,12 @@ expresion_negacion: '~' expresion_relacionales                                  
       | expresion_relacionales                                                  {printf("expresion_negacion -> expresion_relacionales\n");}
       ;
 
-expresion_relacionales: expresion_relacionales '<' expresion_desplazamiento     {printf("expresion_relacionales -> expresion_relacionales < expresion_desplazamiento\n");}
-      | expresion_relacionales '>' expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_relacionales > expresion_desplazamiento\n");}
-      | expresion_relacionales LEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_relacionales <= expresion_desplazamiento\n");}
-      | expresion_relacionales GEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_relacionales >= expresion_desplazamiento\n");}
-      | expresion_relacionales '=' expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_relacionales = expresion_desplazamiento\n");}
-      | expresion_relacionales NEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_relacionales ~= expresion_desplazamiento\n");}
+expresion_relacionales: expresion_desplazamiento '<' expresion_desplazamiento     {printf("expresion_relacionales -> expresion_desplazamiento < expresion_desplazamiento\n");}
+      | expresion_desplazamiento '>' expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_desplazamiento > expresion_desplazamiento\n");}
+      | expresion_desplazamiento LEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_desplazamiento <= expresion_desplazamiento\n");}
+      | expresion_desplazamiento GEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_desplazamiento >= expresion_desplazamiento\n");}
+      | expresion_desplazamiento '=' expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_desplazamiento = expresion_desplazamiento\n");}
+      | expresion_desplazamiento NEQ expresion_desplazamiento                     {printf("expresion_relacionales -> expresion_desplazamiento ~= expresion_desplazamiento\n");}
       | expresion_desplazamiento                                                {printf("expresion_relacionales -> expresion_desplazamiento\n");}
       ;
 
