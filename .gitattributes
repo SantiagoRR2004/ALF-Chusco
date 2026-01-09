@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Add Bison files
+*.y linguist-language=Bison linguist-detectable=true
+
+# Add Flex files
+*.l linguist-language=Flex linguist-detectable=true
